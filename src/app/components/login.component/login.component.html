@@ -1,0 +1,101 @@
+<div class="login-page">
+    <div class="login-form-container card">
+
+        <div class="login-content-container">
+            <img [src]="logo" class="image rounded-circle" [@switchLogo]="stateName" (@switchLogo.start)="onStart(event$)">
+        </div>
+        <div class="login-content-container form-container">
+            <form class="login-container" [formGroup]="loginForm" novalidate>
+                <div class="header">
+                    <span class="header-text">{{loginHeader}}</span>
+                </div>
+                <div class="inner-addon">
+                    <fa-icon [icon]="email" class="left-addon"></fa-icon>
+                    <input type="email" class="form-control" formControlName="emailId" placeholder="Email Id">
+                    <span class="validation-error" *ngIf="loginForm.controls.emailId.errors?.required && loginForm.controls.emailId.touched">
+                        Emaild Id is required</span>
+                    <span class="validation-error" *ngIf="loginForm.controls.emailId.errors?.email && loginForm.controls.emailId.touched">
+                        Please enter a valid email id</span>
+                </div>
+                <div class="inner-addon">
+                    <fa-icon [icon]="password" class="left-addon"></fa-icon>
+                    <input type="password" class="form-control" formControlName="password" placeholder="Password">
+                    <span class="validation-error" *ngIf="loginForm.controls.password.errors?.required && loginForm.controls.password.touched">
+                        Password is required</span>
+                    <span class="validation-error" *ngIf="loginForm.controls.password.errors?.minlength && loginForm.controls.password.touched">
+                        Minimum length of password should be 5 characters</span>
+                    <span class="validation-error" *ngIf="loginForm.controls.password.errors?.maxlength && loginForm.controls.password.touched">
+                        Maximum length of password should be 8 characters</span>
+                </div>
+                <div class="footer">
+                    <button class="login-btn btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+                </div>
+            </form>
+            <div class="create-account">
+                <span (click)="toggleModal(true)">{{createAccText}}</span>
+                <fa-icon [icon]="sideArrow" class="create-acc-arrow"></fa-icon>
+            </div>
+        </div>
+    </div>
+    <particles-js class="particle-background"></particles-js>
+</div>
+
+<!--Create Account Modal-->
+<modal-component [modalStatus]="createAccModalStatus" (modalClosed)="closedByAction($event)" [center]="true">
+    <div class="head">
+        Header
+    </div>
+    <div class="body">
+        <form [formGroup]="signUpForm" novalidate>
+            <div class="sign-up-form">
+                <div class="inner-addon">
+                    <fa-icon [icon]="user" class="left-addon"></fa-icon>
+                    <input class="form-control" formControlName="firstName" placeholder="First Name">
+                    <span class="validation-error" *ngIf="signUpForm.controls.firstName.errors?.required && signUpForm.controls.firstName.touched">
+                        First Name cannot be empty
+                    </span>
+                </div>
+                <div class="inner-addon">
+                    <fa-icon [icon]="user" class="left-addon"></fa-icon>
+                    <input class="form-control" formControlName="lastName" placeholder="Last Name">
+                    <span class="validation-error" *ngIf="signUpForm.controls.lastName.errors?.required && signUpForm.controls.lastName.touched">
+                        Last Name cannot be empty
+                    </span>
+                </div>
+                <div class="inner-addon">
+                    <fa-icon [icon]="email" class="left-addon"></fa-icon>
+                    <input type="email" class="form-control" formControlName="signUpEmailId" placeholder="Email Id">
+                    <span class="validation-error" *ngIf="signUpForm.controls.signUpEmailId.errors?.required && signUpForm.controls.signUpEmailId.touched">
+                        Emaild Id is required</span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.signUpEmailId.errors?.email && signUpForm.controls.signUpEmailId.touched">
+                        Please enter a valid email id</span>
+                </div>
+                <div class="inner-addon">
+                    <fa-icon [icon]="password" class="left-addon"></fa-icon>
+                    <input type="password" class="form-control" formControlName="signUpPassword" placeholder="Password">
+                    <span class="validation-error" *ngIf="signUpForm.controls.signUpPassword.errors?.required && signUpForm.controls.signUpPassword.touched">
+                        Password is required</span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.signUpPassword.errors?.minlength && signUpForm.controls.signUpPassword.touched">
+                        Minimum length of password should be 5 characters</span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.signUpPassword.errors?.maxlength && signUpForm.controls.signUpPassword.touched">
+                        Maximum length of password should be 8 characters</span>
+                </div>
+                <div class="inner-addon">
+                    <fa-icon [icon]="password" class="left-addon"></fa-icon>
+                    <input type="password" class="form-control" formControlName="signUpConfirmPassword" placeholder="Confirm Password">
+                    <span class="validation-error" *ngIf="signUpForm.controls.signUpConfirmPassword.errors?.required && signUpForm.controls.signUpConfirmPassword.touched">
+                        Password is required</span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.signUpConfirmPassword.errors?.minlength && signUpForm.controls.signUpConfirmPassword.touched">
+                        Minimum length of password should be 5 characters</span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.signUpConfirmPassword.errors?.maxlength && signUpForm.controls.signUpConfirmPassword.touched">
+                        Maximum length of password should be 8 characters</span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.signUpConfirmPassword.errors?.confirmPwd && signUpForm.controls.signUpConfirmPassword.touched">
+                        Password & Confirm Password donot match</span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="foot">
+        <button class="login-btn btn btn-primary" [disabled]="signUpForm.invalid" (click)="signUpUser()">Sign Up</button>
+    </div>
+</modal-component>

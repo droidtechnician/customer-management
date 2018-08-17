@@ -1,0 +1,11 @@
+<ng-template #modalContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <ng-content select=".head"></ng-content>
+    </div>
+    <div class="modal-body">
+        <ng-content select=".body"></ng-content>
+    </div>
+    <div class="modal-footer">
+        <ng-content select=".foot"></ng-content>
+    </div>
+</ng-template>
