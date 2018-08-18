@@ -1,13 +1,14 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule, Router } from '@angular/router';
 
 import { LoginComponent } from './components/login.component/login.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from './modules/shared-module/shared.module';
 import { PluginsModule } from './modules/plugins-module/plugins.module';
+import { HttpClientModule } from '@angular/common/http';
 
 /**
  * App level Routes
@@ -27,6 +28,8 @@ const appRoutes: Routes = [
         ReactiveFormsModule,
         CommonModule,
         BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
         RouterModule.forRoot(appRoutes)
     ],
     exports: [
