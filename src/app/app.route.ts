@@ -15,7 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
  */
 const appRoutes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
-    {path: 'login', component: LoginComponent}
+    {path: 'login', component: LoginComponent},
+    {path: 'home', loadChildren: './modules/home-module/home.module#HomeModule'}
 ];
 
 @NgModule({

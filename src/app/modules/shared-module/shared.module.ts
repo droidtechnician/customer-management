@@ -1,6 +1,7 @@
 import { NgModule, OnInit } from '@angular/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 declare var particleJS: any;
 
@@ -8,9 +9,11 @@ declare var particleJS: any;
     declarations: [],
     imports: [
         FontAwesomeModule,
+        LoadingBarHttpClientModule
     ],
     exports: [
         FontAwesomeModule,
+        LoadingBarHttpClientModule
     ]
 })
 

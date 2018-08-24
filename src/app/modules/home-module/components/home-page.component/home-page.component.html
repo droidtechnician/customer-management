@@ -1,0 +1,78 @@
+<div>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-fixed-top nav-bar">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <img src="assets/angular.png" class="brand-image">
+                    <label class="brand-title">Customer Management</label>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav tabs-list nav-pills navbar-left">
+                        <!-- <li class="active">
+                            <a (click)="tabClicked()">Customers</a>
+                        </li>
+                        <li>
+                            <a>Orders</a>
+                        </li>
+                        <li>
+                            <a>About</a>
+                        </li> -->
+                        <li *ngFor="let tab of homeNavigationTabs"
+                            [ngClass]="{'active': tab.tabName === defaultTab}">
+                            <a (click)="tabClicked(tab)">{{tab.tabName}}</a>
+                        </li>
+                    </ul>
+                    <ul class="nav right-list navbar-nav navbar-right">
+                        <li>
+                            <button class="btn btn-primary btn-lg">
+                                <fa-icon [icon]="signOut" class="left-addon"></fa-icon>
+                                Logout
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="content">
+        <ng-container *ngFor="let item of mockData">
+            <p>{{item}}</p>
+        </ng-container>
+    </div>
+</div>
+
+
+
+<!-- <nav class="navbar navbar-default navbar-fixed-top nav-bar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <img src="assets/angular.png" class="brand-image">
+            <label class="brand-title">Customer Management</label>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav tabs-list">
+                <li role="presentation">
+                    <a>Home</a>
+                </li>
+                <li role="presentation">
+                    <a>Profile</a>
+                </li>
+                <li role="presentation">
+                    <a>Messages</a>
+                </li>
+                <li>
+                    <button>Logout</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav> -->

@@ -192,6 +192,9 @@ export class LoginComponent implements OnInit {
    */
   closedByAction(value) {
     this.createAccModalStatus = false;
+    if (!value.status) {
+      this.createSigUpForm();
+    }
   }
 
   /**

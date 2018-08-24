@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { url } from '../constants/url.const';
 import { SignUpModel, SignUpModelResp } from '../utilities/models/sign-up.model';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { UserDataModel } from '../utilities/models/user.model';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class LoginService {
@@ -27,16 +28,27 @@ export class LoginService {
      * @returns {Observable<SignUpModelResp>}
      */
     loginUser(signUpData: SignUpModel): Observable<any> {
-        return this.httpClient.post(url.login, signUpData);
+        return this.httpClient.post(url.login, signUpData)
+            .pipe(catchError(this.handleError));
     }
 
 
     /**
      * @method handleError
      * @param error
-     * @returns { void }
+     * @returns { Observable<any> }
      */
-    handleError(error): void {
-        return;
+    handleError(error: HttpErrorResponse): Observable<any> {
+        if (error.error instanceof ErrorEvent) {
+            console.log('Client Side Error');
+        } else {
+            console.error(
+                `errorCode: ${error.status}` +
+                `errorBode: ${error.error}`
+            );
+        }
+        return throwError(
+            'There seems to be some error please try again later.'
+        );
     }
 }

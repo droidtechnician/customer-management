@@ -46,7 +46,8 @@
 .login-content-container {
   flex: 1;
   display: flex;
-  padding: 2%
+  padding: 2%;
+  background: white
 }
 
 .form-container {
