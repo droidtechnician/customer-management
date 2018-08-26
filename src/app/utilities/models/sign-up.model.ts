@@ -5,4 +5,5 @@ export interface SignUpModel {
 
 export interface SignUpModelResp extends SignUpModel {
     resStatus: boolean;
+    resMsg?: string;
 }

@@ -10,7 +10,6 @@ import { SharedModule } from '../shared-module/shared.module';
         HomePageComponent
     ],
     imports: [
-        CommonModule,
         SharedModule,
         RouterModule.forChild(homeRoutes)
     ]

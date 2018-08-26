@@ -1,78 +1,30 @@
 <div>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-fixed-top nav-bar">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                        aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <img src="assets/angular.png" class="brand-image">
-                    <label class="brand-title">Customer Management</label>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav tabs-list nav-pills navbar-left">
-                        <!-- <li class="active">
-                            <a (click)="tabClicked()">Customers</a>
-                        </li>
-                        <li>
-                            <a>Orders</a>
-                        </li>
-                        <li>
-                            <a>About</a>
-                        </li> -->
-                        <li *ngFor="let tab of homeNavigationTabs"
-                            [ngClass]="{'active': tab.tabName === defaultTab}">
-                            <a (click)="tabClicked(tab)">{{tab.tabName}}</a>
-                        </li>
-                    </ul>
-                    <ul class="nav right-list navbar-nav navbar-right">
-                        <li>
-                            <button class="btn btn-primary btn-lg">
-                                <fa-icon [icon]="signOut" class="left-addon"></fa-icon>
-                                Logout
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary nav-bar fixed-top">
+            <a class="navbar-brand">
+                <img src="assets/angular.png" class="brand-image">
+                <span class="brand-title">Customers Manager</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto tabs ">
+                    <li class="nav-item" *ngFor="let navTab of homeNavigationTabs" [ngClass]="{'active': defaultTab===navTab.tabName}">
+                        <a class="nav-link nav-link-content" (click)="tabClicked(navTab)">{{navTab.tabName}}</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
             </div>
         </nav>
     </div>
     <div class="content">
         <ng-container *ngFor="let item of mockData">
-            <p>{{item}}</p>
+            <p (click)="itemClicked()">{{item}}</p>
         </ng-container>
     </div>
 </div>
-
-
-
-<!-- <nav class="navbar navbar-default navbar-fixed-top nav-bar">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <img src="assets/angular.png" class="brand-image">
-            <label class="brand-title">Customer Management</label>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav tabs-list">
-                <li role="presentation">
-                    <a>Home</a>
-                </li>
-                <li role="presentation">
-                    <a>Profile</a>
-                </li>
-                <li role="presentation">
-                    <a>Messages</a>
-                </li>
-                <li>
-                    <button>Logout</button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav> -->

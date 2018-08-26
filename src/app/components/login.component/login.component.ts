@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl} from '@angular/forms';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl} from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { faAt, faUnlockAlt, faArrowRight, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime } from 'rxjs/operators';
@@ -9,6 +10,9 @@ import { LoginService } from '../../services/login-in.service';
 import { SignUpModel, SignUpModelResp } from '../../utilities/models/sign-up.model';
 import { sampleCredentials } from '../../constants/sample.credential.const';
 import { UserDataModel } from '../../utilities/models/user.model';
+import { ToastsManager } from 'ng6-toastr';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'login',
@@ -36,7 +40,7 @@ import { UserDataModel } from '../../utilities/models/user.model';
       LoginService
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy{
   /*Header*/
   loginHeader = 'Member Login';
   signUpHeader = 'Create Account';
@@ -59,6 +63,7 @@ export class LoginComponent implements OnInit {
   /*Login form*/
   loginForm: FormGroup;
   signUpForm: FormGroup;
+  loginFormDefaultValue: Subscription;
 
   /*Create Account Modal Status*/
   createAccModalStatus = false;
@@ -69,12 +74,19 @@ export class LoginComponent implements OnInit {
   /*Dummy credentials Checkbox*/
   dummyCredentials = false;
 
-  constructor( private formBuilder: FormBuilder, private loginService: LoginService) {}
+  constructor( private formBuilder: FormBuilder, private loginService: LoginService,
+    private toastr: ToastsManager, vcr: ViewContainerRef, private router: Router) {
+      this.toastr.setRootViewContainerRef(vcr);
+    }
 
   ngOnInit() {
     this.createLoginForm();
     this.createSigUpForm();
     this.switchImage();
+  }
+
+  ngOnDestroy() {
+    if (this.loginFormDefaultValue) this.loginFormDefaultValue.unsubscribe();
   }
 
   /**
@@ -86,11 +98,11 @@ export class LoginComponent implements OnInit {
   createLoginForm(): void {
     this.loginForm = this.formBuilder.group({
       emailId: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(12)]],
       defaultCredentials: [false]
     });
 
-    this.loginForm.get('defaultCredentials').valueChanges
+    this.loginFormDefaultValue = this.loginForm.get('defaultCredentials').valueChanges
     .pipe(debounceTime(500))
     .subscribe( (res: boolean) => {
       if (res) {
@@ -231,7 +243,14 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.get('password').value
       };
       this.loginService.loginUser(loginData).subscribe((res: SignUpModelResp) => {
-        console.log(res);
+        if (res.resStatus) {
+          this.toastr.success('Login Success');
+          this.loginService.registerUser(true);
+          this.router.navigate(['./home'])
+
+        } else {
+          this.toastr.error(res.resMsg);
+        }
       });
     }
   }

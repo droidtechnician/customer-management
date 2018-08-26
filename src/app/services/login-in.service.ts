@@ -32,6 +32,16 @@ export class LoginService {
             .pipe(catchError(this.handleError));
     }
 
+    /**
+     * Register User
+     * @method registerUser
+     * @param userStatus set user status true/false
+     * @returns void
+     */
+    registerUser(userStatus: boolean) {
+        sessionStorage.setItem('userStatus', `${userStatus}`);
+    }
+
 
     /**
      * @method handleError

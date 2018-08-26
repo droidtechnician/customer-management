@@ -25,11 +25,11 @@
                     <span class="validation-error" *ngIf="loginForm.controls.password.errors?.minlength && loginForm.controls.password.touched">
                         Minimum length of password should be 5 characters</span>
                     <span class="validation-error" *ngIf="loginForm.controls.password.errors?.maxlength && loginForm.controls.password.touched">
-                        Maximum length of password should be 8 characters</span>
+                        Maximum length of password should be 12 characters</span>
                 </div>
 
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input"  id="defaultUnchecked" formControlName="defaultCredentials">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked" formControlName="defaultCredentials">
                     <label class="custom-control-label" for="defaultUnchecked">Default login credentials</label>
                 </div>
 

@@ -1,5 +1,5 @@
 export const navigationTabs: Array<NavigationTab> = [
-    {tabName: 'Customer', tabRoute: ''},
+    {tabName: 'Customers', tabRoute: ''},
     {tabName: 'Orders', tabRoute: ''},
     {tabName: 'About', tabRoute: ''},
 ];
