@@ -3,6 +3,8 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { navigationTabs } from '../../constants/constants';
 import { ToastsManager } from 'ng6-toastr';
+import { HomePageService } from '../../services/home-page.service';
+import { ToasterEnum } from '../../../../utilities/enums/toaster.enums';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -10,6 +12,9 @@ import { ToastsManager } from 'ng6-toastr';
     templateUrl: 'home-page.component.html',
     styleUrls: [
         'home-page.component.css'
+    ],
+    providers: [
+        HomePageService
     ]
 })
 
@@ -24,9 +29,7 @@ export class HomePageComponent implements OnInit {
     defaultTab = navigationTabs[0].tabName;
 
 
-    constructor(private toastManager: ToastsManager, vcr: ViewContainerRef) {
-        toastManager.setRootViewContainerRef(vcr);
-    }
+    constructor(private homeService: HomePageService) {}
 
     ngOnInit() {
         for (let i = 0; i < 100; i++) {
@@ -41,6 +44,6 @@ export class HomePageComponent implements OnInit {
 
     // TODO: Will be removed in future implementation
     itemClicked() {
-        this.toastManager.info('Item Clicked!!');
+        this.homeService.showToast({type: ToasterEnum.INFORMATION, msg: "Hello From Sample"});
     }
 }

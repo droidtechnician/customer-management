@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
 import { GlobalService } from './services/global.service';
 import { ToasterEnum } from './utilities/enums/toaster.enums';
 import { ToastsManager } from 'ng6-toastr';
@@ -8,7 +8,7 @@ import { ToastsManager } from 'ng6-toastr';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private globalService: GlobalService, private toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -16,6 +16,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.showToasterMsg();
+  }
+
+  ngOnDestroy() {
+    this.globalService.getToast().unsubscribe();
   }
 
   /**
