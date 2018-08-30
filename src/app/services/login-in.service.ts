@@ -4,12 +4,15 @@ import { url } from '../constants/url.const';
 import { SignUpModel, SignUpModelResp } from '../utilities/models/sign-up.model';
 import { Observable, throwError } from 'rxjs';
 import { UserDataModel } from '../utilities/models/user.model';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { ErrorModel } from '../utilities/models/error.model';
+import { GlobalService } from './global.service';
+import { ToasterModel } from '../utilities/models/toast.model';
 
 @Injectable()
 export class LoginService {
 
-    constructor(private httpClient: HttpClient) {}
+    constructor(private httpClient: HttpClient, private globalService: GlobalService) {}
 
     /**
      * SignUp User
@@ -17,8 +20,9 @@ export class LoginService {
      * @param none
      * @returns void
      */
-    signUpUser(data: UserDataModel): Observable<any> {
-        return this.httpClient.post(url.signup, data);
+    signUpUser(data: UserDataModel): Observable<SignUpModelResp> {
+        return this.httpClient.post<SignUpModelResp>(url.signup, data)
+            .pipe(catchError(this.handleError));
     }
 
     /**
@@ -50,15 +54,26 @@ export class LoginService {
      */
     handleError(error: HttpErrorResponse): Observable<any> {
         if (error.error instanceof ErrorEvent) {
-            console.log('Client Side Error');
-        } else {
-            console.error(
-                `errorCode: ${error.status}` +
-                `errorBode: ${error.error}`
-            );
+            return throwError(
+                {
+                    name: 'ClientError',
+                    errorMsg: 'There seems to be some issue at the client side'
+                }
+            )
         }
-        return throwError(
-            'There seems to be some error please try again later.'
-        );
+        const errorObj = new ErrorModel(error);
+            return throwError(
+                errorObj.getErrorCode()
+            );
+    }
+
+    /**
+     * Show and hide toast injected on parent component
+     * @method showToast
+     * @param toasterData
+     * @return void
+     */
+    showToast(toasterData: ToasterModel): void {
+        this.globalService.showToasterMsg(toasterData);
     }
 }

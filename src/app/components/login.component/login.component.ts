@@ -13,6 +13,7 @@ import { UserDataModel } from '../../utilities/models/user.model';
 import { ToastsManager } from 'ng6-toastr';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { ToasterEnum } from '../../utilities/enums/toaster.enums';
 
 @Component({
   selector: 'login',
@@ -74,10 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy{
   /*Dummy credentials Checkbox*/
   dummyCredentials = false;
 
-  constructor( private formBuilder: FormBuilder, private loginService: LoginService,
-    private toastr: ToastsManager, vcr: ViewContainerRef, private router: Router) {
-      this.toastr.setRootViewContainerRef(vcr);
-    }
+  constructor( private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) {}
 
   ngOnInit() {
     this.createLoginForm();
@@ -224,9 +222,13 @@ export class LoginComponent implements OnInit, OnDestroy{
         password: this.signUpForm.get('signUpPassword').value
       };
       this.loginService.signUpUser(signUpData)
-        .subscribe(res => {
-          console.log(res);
-        });
+        .subscribe((res: SignUpModelResp) => {
+          if (res.resStatus) this.loginService.showToast({type: ToasterEnum.SUCCESS, msg: res.resMsg});
+          else {
+            // this.toastr.error(res)
+          }
+        }, error => {
+          console.log(error)});
     }
   }
 
@@ -244,13 +246,16 @@ export class LoginComponent implements OnInit, OnDestroy{
       };
       this.loginService.loginUser(loginData).subscribe((res: SignUpModelResp) => {
         if (res.resStatus) {
-          this.toastr.success('Login Success');
+          const msg: string = "Logged in successfully";
+          this.loginService.showToast({type: ToasterEnum.SUCCESS, msg: msg});
           this.loginService.registerUser(true);
           this.router.navigate(['./home'])
 
         } else {
-          this.toastr.error(res.resMsg);
+          this.loginService.showToast({type: ToasterEnum.ERROR, msg: res.resMsg});
         }
+      }, error => {
+        this.loginService.showToast({type: ToasterEnum.ERROR, msg: error.resMsg});
       });
     }
   }

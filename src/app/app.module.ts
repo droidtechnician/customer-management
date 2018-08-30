@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.route';
+import { GlobalService } from './services/global.service';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,9 @@ import { AppRoutes } from './app.route';
     BrowserModule,
     AppRoutes
   ],
-  providers: [],
+  providers: [
+    GlobalService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
