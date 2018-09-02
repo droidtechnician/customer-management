@@ -10,9 +10,9 @@
             </button>
 
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto tabs ">
-                    <li class="nav-item" *ngFor="let navTab of homeNavigationTabs" [ngClass]="{'active': defaultTab===navTab.tabName}">
-                        <a class="nav-link nav-link-content" (click)="tabClicked(navTab)">{{navTab.tabName}}</a>
+                <ul class="navbar-nav mr-auto tabs">
+                    <li class="nav-item" *ngFor="let navTab of homeNavigationTabs">
+                        <a class="nav-link nav-link-content" [routerLink]="navTab.tabRoute" routerLinkActive="active">{{navTab.tabName}}</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
@@ -23,8 +23,6 @@
         </nav>
     </div>
     <div class="content">
-        <ng-container *ngFor="let item of mockData">
-            <p (click)="itemClicked()">{{item}}</p>
-        </ng-container>
+        <router-outlet></router-outlet>
     </div>
 </div>

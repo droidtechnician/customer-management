@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.route';
 import { GlobalService } from './services/global.service';
+import { LoginLoader } from './services/auth-guards/can-load-login';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { GlobalService } from './services/global.service';
     AppRoutes
   ],
   providers: [
-    GlobalService
+    LoginLoader
   ],
   bootstrap: [AppComponent]
 })

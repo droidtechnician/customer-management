@@ -1,13 +1,18 @@
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
 import { ToastModule, ToastOptions } from 'ng6-toastr';
 import { ToastCustomOptions } from './toast.options';
+import { GlobalService } from '../../services/global.service';
 
 @NgModule({
     imports: [
         ToastModule.forRoot(),
     ],
     providers: [
-        { provide: ToastOptions, useClass: ToastCustomOptions}
+        { 
+            provide: ToastOptions,
+            useClass: ToastCustomOptions
+        },
+        GlobalService
     ]
 })
 
@@ -23,7 +28,8 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
-                ToastModule
+                ToastModule,
+                GlobalService
             ]
         }
     }

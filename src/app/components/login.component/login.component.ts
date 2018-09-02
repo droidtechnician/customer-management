@@ -255,7 +255,7 @@ export class LoginComponent implements OnInit, OnDestroy{
           this.loginService.showToast({type: ToasterEnum.ERROR, msg: res.resMsg});
         }
       }, error => {
-        this.loginService.showToast({type: ToasterEnum.ERROR, msg: error.resMsg});
+        this.loginService.showToast({type: ToasterEnum.ERROR, msg: error.error.errorMsg});
       });
     }
   }

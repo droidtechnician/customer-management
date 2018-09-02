@@ -20,30 +20,13 @@ import { ToasterEnum } from '../../../../utilities/enums/toaster.enums';
 
 export class HomePageComponent implements OnInit {
 
-    mockData: Array<string> = [];
-
     /*Icons*/
     signOut = faSignOutAlt;
 
     homeNavigationTabs = navigationTabs;
-    defaultTab = navigationTabs[0].tabName;
 
 
     constructor(private homeService: HomePageService) {}
 
-    ngOnInit() {
-        for (let i = 0; i < 100; i++) {
-            this.mockData.push('SampleName');
-        }
-    }
-
-    // TODO: Will be removed in future implementation
-    tabClicked(tab) {
-        this.defaultTab = tab.tabName;
-    }
-
-    // TODO: Will be removed in future implementation
-    itemClicked() {
-        this.homeService.showToast({type: ToasterEnum.INFORMATION, msg: "Hello From Sample"});
-    }
+    ngOnInit() {}
 }

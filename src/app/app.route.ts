@@ -8,10 +8,10 @@ import { SharedModule } from './modules/shared-module/shared.module';
 import { PluginsModule } from './modules/plugins-module/plugins.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './modules/shared-module/components/page-not-found/page-not-found.component';
-import { ToastModule } from 'ng6-toastr';
 import { CoreModule } from './modules/core-module/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivateHomeRoute } from './services/activate-home-route';
+import { ActivateHomeRoute } from './services/auth-guards/activate-home-route';
+import { LoginLoader } from './services/auth-guards/can-load-login';
 
 /**
  * App level Routes
@@ -31,7 +31,10 @@ const appRoutes: Routes = [
     },
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [
+            LoginLoader
+        ]
     },
     {
         path: '**',
