@@ -2,7 +2,7 @@
     <div class="login-form-container card">
 
         <div class="login-content-container">
-            <img [src]="logo" class="image rounded-circle" [@switchLogo]="stateName" (@switchLogo.start)="onStart(event$)">
+            <img [src]="logo" class="image rounded-circle" [@switchLogo]="stateName" (@switchLogo.start)="onStart($event)">
         </div>
         <div class="login-content-container form-container">
             <form class="login-container" [formGroup]="loginForm" novalidate>

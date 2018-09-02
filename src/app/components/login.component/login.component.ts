@@ -178,7 +178,7 @@ export class LoginComponent implements OnInit, OnDestroy{
    * @argument none
    * @returns { void }
    */
-  onStart(): void {
+  onStart(value): void {
     setTimeout(() => {
       this.logo = this.getImage();
     });
