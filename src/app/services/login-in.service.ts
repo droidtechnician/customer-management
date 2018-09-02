@@ -61,9 +61,9 @@ export class LoginService {
                 }
             )
         }
-        const errorObj = new ErrorModel(error);
+        const errorObj = new ErrorModel(error.error[0]);
             return throwError(
-                errorObj.getErrorCode()
+                errorObj
             );
     }
 

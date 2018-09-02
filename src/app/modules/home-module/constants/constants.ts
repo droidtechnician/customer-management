@@ -1,7 +1,7 @@
 export const navigationTabs: Array<NavigationTab> = [
-    {tabName: 'Customers', tabRoute: ''},
-    {tabName: 'Orders', tabRoute: ''},
-    {tabName: 'About', tabRoute: ''},
+    {tabName: 'Customers', tabRoute: 'customers'},
+    {tabName: 'Orders', tabRoute: 'orders'},
+    {tabName: 'About', tabRoute: 'about'},
 ];
 
 interface NavigationTab {

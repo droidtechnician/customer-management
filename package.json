@@ -30,6 +30,7 @@
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
     "ng6-toastr": "^6.0.0",
+    "ngx": "^2.4.0",
     "particles.js": "^2.0.0",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.2.2",

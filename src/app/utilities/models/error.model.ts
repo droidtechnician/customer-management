@@ -6,10 +6,8 @@ export class ErrorModel {
     constructor(private error: HttpErrorResponse) {}
 
     getErrorCode(): ErrorWrapper {
-
         if (this.error.status === 400) return this.error.error;
         return ErrorConst[`${this.error.status}`]
-
     }
 
 }
