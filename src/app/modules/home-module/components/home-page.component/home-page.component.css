@@ -1,0 +1,24 @@
+.nav-bar {
+    background: linear-gradient(to right, #5b8b9e, lightblue);
+}
+
+.content {
+    margin-top: 75px;
+}
+
+.brand-image {
+    height: 45px;
+}
+
+.brand-title {
+    font-size: 1em;
+    color: white;
+    bottom: 0;
+    padding: 5px;
+    vertical-align: middle;
+    margin-bottom: 0px
+}
+
+.nav-link-content {
+    font-weight: 600
+}

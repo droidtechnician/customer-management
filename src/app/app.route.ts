@@ -1,20 +1,42 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule, Router } from '@angular/router';
 
 import { LoginComponent } from './components/login.component/login.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from './modules/shared-module/shared.module';
 import { PluginsModule } from './modules/plugins-module/plugins.module';
+import { HttpClientModule } from '@angular/common/http';
+import { PageNotFoundComponent } from './modules/shared-module/components/page-not-found/page-not-found.component';
+import { ToastModule } from 'ng6-toastr';
+import { CoreModule } from './modules/core-module/core.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivateHomeRoute } from './services/activate-home-route';
 
 /**
  * App level Routes
  */
 const appRoutes: Routes = [
-    {path: '', redirectTo: '/login', pathMatch: 'full'},
-    {path: 'login', component: LoginComponent}
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
+    {
+        path: 'home',
+        loadChildren: './modules/home-module/home.module#HomeModule',
+        canActivate: [
+            ActivateHomeRoute
+        ]
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: '**',
+        component: PageNotFoundComponent
+    }
 ];
 
 @NgModule({
@@ -22,17 +44,21 @@ const appRoutes: Routes = [
         LoginComponent
     ],
     imports: [
+        BrowserAnimationsModule,
         SharedModule,
         PluginsModule,
         ReactiveFormsModule,
         CommonModule,
-        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        CoreModule,
         RouterModule.forRoot(appRoutes)
     ],
     exports: [
         LoginComponent,
         RouterModule
-    ]
+    ],
+    providers: []
 })
 
 export class AppRoutes {}

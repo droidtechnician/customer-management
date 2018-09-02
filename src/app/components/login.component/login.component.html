@@ -25,10 +25,16 @@
                     <span class="validation-error" *ngIf="loginForm.controls.password.errors?.minlength && loginForm.controls.password.touched">
                         Minimum length of password should be 5 characters</span>
                     <span class="validation-error" *ngIf="loginForm.controls.password.errors?.maxlength && loginForm.controls.password.touched">
-                        Maximum length of password should be 8 characters</span>
+                        Maximum length of password should be 12 characters</span>
                 </div>
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked" formControlName="defaultCredentials">
+                    <label class="custom-control-label" for="defaultUnchecked">Default login credentials</label>
+                </div>
+
                 <div class="footer">
-                    <button class="login-btn btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+                    <button class="login-btn btn btn-primary" [disabled]="loginForm.invalid" (click)="login()">Login</button>
                 </div>
             </form>
             <div class="create-account">
@@ -43,7 +49,7 @@
 <!--Create Account Modal-->
 <modal-component [modalStatus]="createAccModalStatus" (modalClosed)="closedByAction($event)" [center]="true">
     <div class="head">
-        Header
+        {{signUpHeader}}
     </div>
     <div class="body">
         <form [formGroup]="signUpForm" novalidate>
@@ -54,12 +60,24 @@
                     <span class="validation-error" *ngIf="signUpForm.controls.firstName.errors?.required && signUpForm.controls.firstName.touched">
                         First Name cannot be empty
                     </span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.firstName.errors?.minlength && signUpForm.controls.firstName.touched">
+                        First name should contain minimum 3 characters
+                    </span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.firstName.errors?.maxlength && signUpForm.controls.firstName.touched">
+                        First name should contain maximum 12 characters
+                    </span>
                 </div>
                 <div class="inner-addon">
                     <fa-icon [icon]="user" class="left-addon"></fa-icon>
                     <input class="form-control" formControlName="lastName" placeholder="Last Name">
                     <span class="validation-error" *ngIf="signUpForm.controls.lastName.errors?.required && signUpForm.controls.lastName.touched">
                         Last Name cannot be empty
+                    </span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.lastName.errors?.minlength && signUpForm.controls.lastName.touched">
+                        Last Name should contain minimum 3 characters
+                    </span>
+                    <span class="validation-error" *ngIf="signUpForm.controls.lastName.errors?.maxlength && signUpForm.controls.lastName.touched">
+                        Last Name should contain maximum 12 characters
                     </span>
                 </div>
                 <div class="inner-addon">
