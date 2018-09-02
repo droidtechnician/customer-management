@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { url } from '../constants/url.const';
 import { SignUpModel, SignUpModelResp } from '../utilities/models/sign-up.model';
 import { Observable, throwError } from 'rxjs';
@@ -12,7 +12,12 @@ import { ToasterModel } from '../utilities/models/toast.model';
 @Injectable()
 export class LoginService {
 
-    constructor(private httpClient: HttpClient, private globalService: GlobalService) {}
+    private httpHeaders: HttpHeaders;
+
+    constructor(private httpClient: HttpClient, private globalService: GlobalService) {
+        this.httpHeaders = new HttpHeaders();
+        this.httpHeaders.set('Access-Control-Allow-Origin', '*');
+    }
 
     /**
      * SignUp User
@@ -32,7 +37,7 @@ export class LoginService {
      * @returns {Observable<SignUpModelResp>}
      */
     loginUser(signUpData: SignUpModel): Observable<any> {
-        return this.httpClient.post(url.login, signUpData)
+        return this.httpClient.post(url.login, signUpData, {headers: this.httpHeaders})
             .pipe(catchError(this.handleError));
     }
 
