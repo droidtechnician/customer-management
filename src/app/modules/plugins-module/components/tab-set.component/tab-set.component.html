@@ -1,0 +1,10 @@
+<div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let tabItem of tabsList">
+            <a class="nav-link active" href="#">
+                <fa-icon [icon]="tabItem.tabIcon" class="tab-icon"></fa-icon>
+                <span>{{tabItem.tabName}}</span>
+            </a>
+        </li>
+    </ul>
+</div>
