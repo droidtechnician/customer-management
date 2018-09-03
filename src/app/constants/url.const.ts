@@ -1,6 +1,6 @@
-export const baseUrl = 'http://localhost:3000';
+import { environment } from '../../environments/environment';
 
 export const url = {
-    login: baseUrl + '/login',
-    signup: baseUrl + '/signup'
+    login: environment.baseUri + '/login',
+    signup: environment.baseUri + '/signup'
 };
