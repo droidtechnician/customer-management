@@ -1,1 +1,10 @@
-<tabset-component [tabsList]="tabsList"></tabset-component>
+<div>
+    <list-all-component [listAllConfig]="listAllConfig">
+        <div class="header-body">
+            <button class="btn btn-primary create-order-btn">Create Order</button>
+        </div>
+        <div class="list-all-body">
+            <router-outlet></router-outlet>
+        </div>
+    </list-all-component>
+</div>

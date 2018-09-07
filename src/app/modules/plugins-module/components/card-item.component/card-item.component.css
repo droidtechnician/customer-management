@@ -1,0 +1,27 @@
+.card-layout {
+    width: 12rem
+}
+
+.card-header {
+    background: linear-gradient(to right, #5b8b9e, lightblue);
+    color: white
+}
+
+.custom-box {
+    width: 200px;
+    float: left
+}
+
+.image-container {
+    width: 40%;
+    margin: auto;
+}
+
+.image-box {
+    width: 100%;
+    padding: 5%
+}
+
+.icon path {
+    color: #5b8b9e
+}

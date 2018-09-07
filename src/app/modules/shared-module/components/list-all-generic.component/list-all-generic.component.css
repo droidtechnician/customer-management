@@ -1,0 +1,12 @@
+.page-title {
+    padding: 10px 20px;
+    display: flex
+}
+
+.header-logo {
+    margin-right: 10px
+}
+
+.remaining-header {
+    flex: 1
+}
