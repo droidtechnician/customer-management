@@ -1,0 +1,20 @@
+<div>
+    <div>
+        <h3 class="page-title">
+            <div>
+                <fa-icon *ngIf="listAllConfig.headerLogo" [icon]="listAllConfig.headerLogo" class="header-logo"></fa-icon>
+                <span><b>{{listAllConfig.header}}</b></span>
+            </div>
+            <div class="remaining-header">
+                <ng-content select=".header-body"></ng-content>
+            </div>
+        </h3>
+    </div>
+    <div class="container-fluid">
+        <tabset-component [tabsList]="listAllConfig.tabsList">
+            <div class="tab-set-body container">
+                <ng-content select=".list-all-body"></ng-content>
+            </div>
+        </tabset-component>
+    </div>
+</div>

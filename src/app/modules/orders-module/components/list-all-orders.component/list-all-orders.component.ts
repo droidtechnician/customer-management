@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TabItemModel } from '../../../plugins-module/models/TabItem';
 
-import { faList, faThLarge } from '@fortawesome/free-solid-svg-icons';
+import { faList, faThLarge, faBox } from '@fortawesome/free-solid-svg-icons';
+import { ListAllModel } from '../../../shared-module/models/ListAll.Model';
 
 @Component({
     selector: 'list-all-orders',
@@ -13,12 +14,23 @@ import { faList, faThLarge } from '@fortawesome/free-solid-svg-icons';
 
 export class ListAllOrdersComponent implements OnInit {
 
-    tabsList: TabItemModel[] = [];
+    listAllConfig: ListAllModel;
 
     constructor() {}
 
     ngOnInit() {
+        this.createConfig();
+    }
+
+    createConfig() {
+        this.listAllConfig = {
+            header: 'Header',
+            pagination: false,
+            tabsList: [],
+            headerLogo: faBox
+        }
         this.createTabs();
+        this.createHeader();
     }
 
     /**
@@ -28,22 +40,33 @@ export class ListAllOrdersComponent implements OnInit {
      * @return { void }
      */
     createTabs(): void  {
-        const carView: TabItemModel = {
+        const cardView: TabItemModel = {
             tabName: 'Card View',
-            navigateTo: '#',
+            navigateTo: 'cardView',
             tabIcon: faThLarge,
             enable: true
         }
 
         const listView: TabItemModel = {
             tabName: 'List View',
-            navigateTo: '#',
+            navigateTo: 'gridView',
             tabIcon: faList,
             enable: true
         }
 
-        this.tabsList.push(carView);
-        this.tabsList.push(listView);
+        this.listAllConfig.tabsList.push(cardView);
+        this.listAllConfig.tabsList.push(listView);
+    }
+
+    /**
+     * Creates header
+     * @method createHeader
+     * @param none
+     * @returns { void }
+     */
+    createHeader(): void {
+        this.listAllConfig.header = 'Orders';
+        this.listAllConfig.pagination = false;
     }
 
 }

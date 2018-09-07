@@ -9,12 +9,24 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LogoConstants } from '../../constants/logo.const';
 import { sampleCredentials } from '../../constants/sample.credential.const';
+import { Observable } from 'rxjs';
+import 'rxjs/add/observable/of';
+import { SignUpModelResp } from '../../utilities/models/sign-up.model';
+import { UserDataModel } from '../../utilities/models/user.model';
 
-export class MockLoginService {
+export class MockLoginService extends LoginService {
 
-    signUpUser() { }
+    signUpUser(data: UserDataModel): Observable<SignUpModelResp> {
+        console.log("Here in MOCK")
+        return Observable.of({
+            emailId: data.emailId, password: data.password,
+            resStatus: true
+        });
+    }
 
-    loginUser() { }
+    loginUser(): Observable<any> {
+        return Observable.of({});
+    }
 
     registerUser() { }
 
@@ -40,9 +52,20 @@ describe('LoginComponent ', () => {
                 FormsModule
             ],
             providers: [
-                { provide: LoginService, useClass: MockLoginService }
+                LoginService
             ]
-        }).compileComponents();
+        })
+            .overrideComponent(LoginComponent, {
+                set: {
+                    providers: [
+                        {
+                            provide: LoginService,
+                            useClass: MockLoginService
+                        }
+                    ]
+                }
+            })
+            .compileComponents();
         fixture = TestBed.createComponent(LoginComponent);
         loginComponent = fixture.debugElement.componentInstance;
     }));
@@ -197,23 +220,31 @@ describe('LoginComponent ', () => {
                 .toBeFalsy();
         });
 
-        it ('signup form should be invalid when the confirm password and password donot match', () => {
+        it('signup form should be invalid when the confirm password and password donot match', () => {
             const tempForm = createDummyForm(signUpForm);
             tempForm.get('signUpConfirmPassword').setValue('SampleSampleSample');
             tempForm.get('signUpPassword').setValue('Sample');
             expect(tempForm.valid)
                 .toBeFalsy();
         });
+
+        // it('signup form is valid and signup button is pressed then signup service is called', () => {
+        //     const tempForm = createDummyForm(signUpForm);
+        //     loginComponent.signUpForm = tempForm;
+        //     const service: LoginService = TestBed.get(LoginService);
+        //     loginComponent.signUpUser();
+
+        // })
     });
 
-    describe('login form ', ()=> {
+    describe('login form ', () => {
 
         let loginForm;
-        beforeEach(async(()=> {
+        beforeEach(async(() => {
             loginComponent.createLoginForm();
             loginForm = loginComponent.loginForm;
         }));
-        
+
         it('is defined', () => {
             expect(loginForm)
                 .toBeDefined();
@@ -251,13 +282,13 @@ describe('LoginComponent ', () => {
                 .toBeFalsy();
         });
 
-        it('defaultcredentials values are applied when the defaultCredential toggle is changed', ()=> {
+        it('defaultcredentials values are applied when the defaultCredential toggle is changed', () => {
             loginForm.get('defaultCredentials').setValue(true);
             const emailId = loginForm.get('emailId').value;
             const password = loginForm.get('password').value;
-            setTimeout(()=> {
+            setTimeout(() => {
                 expect(emailId === sampleCredentials.emailId && password === sampleCredentials.password)
-                .toBeTruthy();
+                    .toBeTruthy();
             })
         });
 
