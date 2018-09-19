@@ -3,12 +3,19 @@ import { TabItemModel } from '../../../plugins-module/models/TabItem';
 
 import { faList, faThLarge, faBox } from '@fortawesome/free-solid-svg-icons';
 import { ListAllModel } from '../../../shared-module/models/ListAll.Model';
+import { ListOrdersService } from '../../services/list-orders.service';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil } from 'rxjs/operators';
+import { Order, OrderRequest } from '../../models/order.model';
 
 @Component({
     selector: 'list-all-orders',
     templateUrl: './list-all-orders.component.html',
     styleUrls: [
         'list-all-orders.component.css'
+    ],
+    providers: [
+        ListOrdersService
     ]
 })
 
@@ -16,13 +23,47 @@ export class ListAllOrdersComponent implements OnInit {
 
     listAllConfig: ListAllModel;
 
-    constructor() {}
+    orderData: Array<Order> = [];
+
+    // any type has been used as this is subject to unsubscibe 
+    // to all services and has no specific type
+    unsubAllServices: Subject<any> = new Subject<any>();
+
+    constructor(private orderService: ListOrdersService) {}
 
     ngOnInit() {
         this.createConfig();
     }
 
-    createConfig() {
+    /**
+     * gets list of all the orders
+     * @method getAllOrders
+     * @param none
+     * @returns { void }
+     */
+    getAllOrders(): void {
+        this.orderService.getAllOrders()
+            .pipe(
+                takeUntil(this.unsubAllServices)
+            )
+            .subscribe((res: OrderRequest) => {
+                if (res.resStatus) {
+                    this.orderData = res.data;
+                } else {
+                    // TODO: Create no order found handling
+                }
+            }, error => {
+                //  TODO: Handle error in api
+            })
+    }
+
+    /**
+     * creates configuration for the page to be displayed
+     * @method createConfig
+     * @param none
+     * @returns { void }
+     */
+    createConfig(): void {
         this.listAllConfig = {
             header: 'Header',
             pagination: false,
