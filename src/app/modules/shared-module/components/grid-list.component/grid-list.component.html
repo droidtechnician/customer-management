@@ -1,0 +1,20 @@
+<p-table [columns]="cols" [value]="data" autoLayout="true" class="custom-class" [paginator]="true" [rows]="10" [scrollable]="true" scrollHeight="100vh">
+    <ng-template pTemplate="header" let-columns>
+        <tr class="header-row">
+            <th *ngFor="let col of columns" (click)="gridHeaderClicked(col)">
+                <span class="header">{{col.header}}</span>
+                <fa-icon [icon]="downIcons" class="sort-icon" *ngIf="multiSortMeta[col.field] === -1; else upIcon"></fa-icon>
+                <ng-template #upIcon>
+                    <fa-icon [icon]="upIcons" class="sort-icon" *ngIf="multiSortMeta[col.field] === 1"></fa-icon>
+                </ng-template>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                {{item[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -1,0 +1,14 @@
+.header-data {}
+
+.header-row {
+    border-collapse: collapse
+}
+
+th {
+    border: 0 !important;
+}
+
+.ui-table-auto-layout .ui-table-wrapper {
+    overflow-x: hidden !important;
+    background-color: blue
+}
