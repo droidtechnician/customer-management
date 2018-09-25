@@ -81,12 +81,13 @@ export class ListAllOrdersComponent implements OnInit {
      * @return { void }
      */
     createTabs(): void  {
-        const cardView: TabItemModel = {
-            tabName: 'Card View',
-            navigateTo: 'cardView',
-            tabIcon: faThLarge,
-            enable: true
-        }
+        // TODO: will remove in future if no alternate found
+        // const cardView: TabItemModel = {
+        //     tabName: 'Card View',
+        //     navigateTo: 'cardView',
+        //     tabIcon: faThLarge,
+        //     enable: true
+        // }
 
         const listView: TabItemModel = {
             tabName: 'List View',
@@ -95,7 +96,7 @@ export class ListAllOrdersComponent implements OnInit {
             enable: true
         }
 
-        this.listAllConfig.tabsList.push(cardView);
+        // this.listAllConfig.tabsList.push(cardView);
         this.listAllConfig.tabsList.push(listView);
     }
 

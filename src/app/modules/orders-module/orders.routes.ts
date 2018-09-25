@@ -15,13 +15,13 @@ export const orderRoutes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'cardView',
+                redirectTo: 'gridView',
                 pathMatch: 'full'
             },
-            {
-                path: 'cardView',
-                component: ListCardViewComponent
-            },
+            // {
+            //     path: 'cardView',
+            //     component: ListCardViewComponent
+            // },
             {
                 path: 'gridView',
                 component: ListGridViewComponent

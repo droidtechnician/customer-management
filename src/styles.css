@@ -23,3 +23,8 @@ input {
     background-color: #0074d9 !important;
     border-color: #0074d9 !important;
 }
+
+.ui-paginator {
+    background-color: white !important;
+    border: none !important
+}

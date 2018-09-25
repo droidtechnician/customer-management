@@ -1,13 +1,15 @@
 <div class="custom-box">
     <div class="card">
-        <div class="card-header">Header</div>
-        <div class="image-box">
+        <div class="card-header" *ngIf="headerTemplate">
+            <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+        </div>
+        <div class="image-box" *ngIf="imageTemplate">
             <div class="image-container">
-                <fa-icon [icon]="personIcon" size="5x" class="icon"></fa-icon>
+                <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>
             </div>
         </div>
         <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title</p>
+            <ng-container *ngTemplateOutlet="descriptionTemplate"></ng-container>
         </div>
     </div>
 </div>

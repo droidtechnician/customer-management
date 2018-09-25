@@ -1,1 +1,20 @@
-<card-list></card-list>
+<pagination [paginationConfig]="paginationConfig" (pageChange)="pageSelected($event)">
+    <div class="pagination-body">
+        <div class="parent row">
+            <div class="column" *ngFor="let order of ordersList">
+                <card-item>
+                    <ng-template templateDef="header">
+                        <label class="order-no">
+                            OrderNo {{order.orderNo}}
+                            <fa-icon [icon]="editIcon" class="icons"></fa-icon>
+                            <fa-icon [icon]="viewIcon" class="icons"></fa-icon>
+                        </label>
+                    </ng-template>
+                    <ng-template templateDef="description">
+                        <grid-item [data]="{'element': order, 'labels': descLabels}"></grid-item>
+                    </ng-template>
+                </card-item>
+            </div>
+        </div>
+    </div>
+</pagination>

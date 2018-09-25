@@ -7,7 +7,8 @@ import { PluginsModule } from '../plugins-module/plugins.module';
 import { ListAllComponent } from './components/list-all-generic.component/list-all-generic.component';
 import { CardListComponent } from './components/card-list.component/card-list.component';
 import { GridListComponent } from './components/grid-list.component/grid-list.component';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
 
 declare var particleJS: any;
 
@@ -24,7 +25,8 @@ declare var particleJS: any;
         FontAwesomeModule,
         PluginsModule,
         LoadingBarHttpClientModule,
-        TableModule
+        TableModule,
+        PaginatorModule
     ],
     exports: [
         //Components

@@ -1,6 +1,14 @@
 export interface GridItemModel {
-    header: string;
-    propName: string;
-    id: string;
-    editable?: boolean
+    label: string;
+    value: string | number;
+}
+
+export interface GridConfigModel {
+    labels: Array<GridLabelModel>;
+    element: Object;
+}
+
+export interface GridLabelModel {
+    id: string,
+    labelName: string
 }

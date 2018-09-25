@@ -1,5 +1,15 @@
 <div class="parent row">
     <div class="column" *ngFor="let item of list">
-        <card-item></card-item>
+        <card-item>
+            <ng-template templateDef="header">
+                Header Yo ALL
+            </ng-template>
+            <ng-template templateDef="image">
+                Image
+            </ng-template>
+            <ng-template templateDef="description">
+                description
+            </ng-template>
+        </card-item>
     </div>
 </div>
