@@ -1,0 +1,11 @@
+<div>
+    <ng-content select=".pagination-body">
+
+    </ng-content>
+    <div>
+        <ngb-pagination [collectionSize]="paginationConfig.collectionSize" [(page)]="paginationConfig.page" [pageSize]="paginationConfig.pageSize" [maxSize]="paginationConfig.maxSize" [rotate]="paginationConfig.rotate" [boundaryLinks]="paginationConfig.boundryLinks"
+            [ngClass]="paginationPosition()" (pageChange)="pageChanged($event)">
+
+        </ngb-pagination>
+    </div>
+</div>

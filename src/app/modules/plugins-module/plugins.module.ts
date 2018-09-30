@@ -10,6 +10,10 @@ import { TabSetComponent } from './components/tab-set.component/tab-set.componen
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ListItemsComponent } from './components/list-items.component/list-items.component';
 import { CardItemComponent } from './components/card-item.component/card-item.component';
+import { TemplateDefDirective } from './directives/template-defination.directive';
+import { PaginationComponent } from './components/pagination-component/pagination-component';
+import { GridItemComponent } from './components/grid-item.component/grid-item.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 
@@ -19,20 +23,29 @@ import { CardItemComponent } from './components/card-item.component/card-item.co
         ListItemsComponent,
         ModalComponent,
         ParticlesComponent,
-        TabSetComponent
+        TabSetComponent,
+        PaginationComponent,
+        GridItemComponent,
+        //Directive
+        TemplateDefDirective
     ],
     imports: [
         NgbModule,
         CommonModule,
         RouterModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        MatCardModule
     ],
     exports: [
         CardItemComponent,
         ListItemsComponent,
         ModalComponent,
         ParticlesComponent,
-        TabSetComponent
+        TabSetComponent,
+        PaginationComponent,
+        GridItemComponent,
+        //Directive
+        TemplateDefDirective
     ]
 })
 

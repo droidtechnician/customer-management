@@ -20,6 +20,21 @@ input {
 }
 
 .btn-primary {
-  background-color:#0074d9 !important;
-  border-color:#0074d9 !important;
+    background-color: #0074d9 !important;
+    border-color: #0074d9 !important;
+}
+
+.ui-paginator {
+    background-color: white !important;
+    border: none !important
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
 }

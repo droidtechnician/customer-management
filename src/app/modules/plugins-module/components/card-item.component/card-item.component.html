@@ -1,13 +1,18 @@
 <div class="custom-box">
-    <div class="card">
-        <div class="card-header">Header</div>
-        <div class="image-box">
-            <div class="image-container">
-                <fa-icon [icon]="personIcon" size="5x" class="icon"></fa-icon>
-            </div>
-        </div>
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title</p>
-        </div>
-    </div>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <div>
+                    <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+                </div>
+            </mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="assets/male.png" alt="Male">
+        <mat-card-content>
+            <ng-container *ngTemplateOutlet="descriptionTemplate"></ng-container>
+        </mat-card-content>
+        <mat-card-footer>
+            <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+        </mat-card-footer>
+    </mat-card>
 </div>

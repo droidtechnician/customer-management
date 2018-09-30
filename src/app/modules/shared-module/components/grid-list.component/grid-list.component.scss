@@ -1,0 +1,36 @@
+$borderColor: #808080a6;
+.custom-class {
+    .ui-table-auto-layout {
+        .ui-table-wrapper {
+            overflow-x: hidden;
+        }
+    }
+}
+
+.custom-paginator {
+    .ui-paginator-bottom {
+        .ui-paginator {
+            border: none !important;
+            background-color: white
+        }
+    }
+}
+
+th,
+td {
+    border: 0 !important;
+    text-align: left;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+th {
+    border-bottom: 1px solid $borderColor !important;
+    background-color: white !important;
+}
+
+.sort-icon {
+    margin-left: 5px;
+    margin-right: 5px
+}

@@ -7,7 +7,7 @@ import { HeaderInterceptor } from '../../services/interceptors/headers-intercept
 
 @NgModule({
     imports: [
-        ToastModule.forRoot(),
+        ToastModule.forRoot()
     ],
     providers: [
         {

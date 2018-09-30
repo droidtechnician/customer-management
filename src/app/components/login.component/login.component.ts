@@ -10,8 +10,6 @@ import { LoginService } from '../../services/login-in.service';
 import { SignUpModel, SignUpModelResp } from '../../utilities/models/sign-up.model';
 import { sampleCredentials } from '../../constants/sample.credential.const';
 import { UserDataModel } from '../../utilities/models/user.model';
-import { ToastsManager } from 'ng6-toastr';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ToasterEnum } from '../../utilities/enums/toaster.enums';
 
