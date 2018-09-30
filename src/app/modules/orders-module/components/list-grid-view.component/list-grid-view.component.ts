@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GridCols } from '../../../shared-module/models/GridList.Model';
 import { Order, OrderRequest } from '../../models/order.model';
 import { ListOrdersService } from '../../services/list-orders.service';
@@ -15,14 +15,14 @@ import { takeUntil } from 'rxjs/operators';
 
 export class ListGridViewComponent implements OnInit, OnDestroy{
 
-    cols: GridCols[] = [
+    cols: Array<GridCols> = [
         {header: 'Order No', field: 'orderNo'},
         {header: 'Ordered By', field: 'custName'},
         {header: 'Items Count', field: 'itemCount'},
         {header: 'Total cost (in dollars)', field: 'totalAmount'},
     ]
 
-    @Input() data: Array<Order> = [];
+    data: Array<Order> = [];
 
     unsubAllService: Subject<boolean> = new Subject<boolean>();
 

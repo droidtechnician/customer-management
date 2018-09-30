@@ -1,14 +1,24 @@
 <div class="parent row">
-    <div class="column" *ngFor="let item of list">
+    <div class="column" *ngFor="let item of listData">
         <card-item>
             <ng-template templateDef="header">
-                Header Yo ALL
-            </ng-template>
-            <ng-template templateDef="image">
-                Image
+                <label>{{item.header.name}}</label>
             </ng-template>
             <ng-template templateDef="description">
-                description
+                <p>
+                    Very volatile customer. Rarely buys anything
+                </p>
+
+                <!-- <button class="btn btn-primary">
+                    More Details
+                </button> -->
+                <a mat-button>
+                    More Details
+                    <fa-icon [icon]="moreDetailsIcon" class="icon"></fa-icon>
+                </a>
+            </ng-template>
+            <ng-template templateDef="footer">
+
             </ng-template>
         </card-item>
     </div>

@@ -9,6 +9,9 @@ import { CardListComponent } from './components/card-list.component/card-list.co
 import { GridListComponent } from './components/grid-list.component/grid-list.component';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
 
 declare var particleJS: any;
 
@@ -26,7 +29,10 @@ declare var particleJS: any;
         PluginsModule,
         LoadingBarHttpClientModule,
         TableModule,
-        PaginatorModule
+        PaginatorModule,
+        MatButtonModule,
+        MatCardModule,
+        MatExpansionModule
     ],
     exports: [
         //Components
@@ -39,7 +45,9 @@ declare var particleJS: any;
         CommonModule,
         FontAwesomeModule,
         LoadingBarHttpClientModule,
-    ]
+        MatCardModule
+    ],
+    providers: []
 })
 
 export class SharedModule {}

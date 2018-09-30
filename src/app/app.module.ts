@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.route';
-import { GlobalService } from './services/global.service';
 import { LoginLoader } from './services/auth-guards/can-load-login';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './modules/shared-module/shared.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,9 @@ import { LoginLoader } from './services/auth-guards/can-load-login';
   ],
   imports: [
     BrowserModule,
-    AppRoutes
+    AppRoutes,
+    BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [
     LoginLoader

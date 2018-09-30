@@ -1,11 +1,29 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { GlobalService } from '../../../services/global.service';
 import { ToasterModel } from '../../../utilities/models/toast.model';
+import { Observable, throwError } from 'rxjs';
+import { CustomerListRequest } from '../models/customer-request';
+import { url } from '../../../constants/url.const';
+import { catchError } from 'rxjs/operators';
+import { ErrorModel } from '../../../utilities/models/error.model';
 
 @Injectable()
 export class ListAllCustomersService {
 
-    constructor(private globalService: GlobalService) {}
+    constructor(private globalService: GlobalService,
+        private http: HttpClient) {}
+
+    /** 
+     * gets list of all customers
+     * @method getAllCustomers
+     * @returns {Observable<CustomerListRequest>}
+     */
+    getAllCustomers(): Observable<CustomerListRequest> {
+        return this.http.get(url.getAllCustomers)
+            .pipe(catchError(this.handleError))
+
+    }
 
     /**
      * Show and hide toast injected on parent component
@@ -15,5 +33,25 @@ export class ListAllCustomersService {
      */
     showToast(toasterData: ToasterModel): void {
         this.globalService.showToasterMsg(toasterData);
+    }
+
+    /**
+     * this method catches all api errors and takes required action
+     * @method handleError
+     * @param error Http exception error
+     * @returns { Observable<any> }
+     */
+    handleError(error: HttpErrorResponse): Observable<any> {
+        if (error.error instanceof ErrorEvent)
+            return throwError(
+                {
+                    name: 'ClientError',
+                    errorMsg: 'There seems to be some issue at the client side'
+                }
+            );
+        const errorObj = new ErrorModel(error.error[0]);
+            return throwError(
+                errorObj
+            );
     }
 }

@@ -26,6 +26,7 @@ export class CardItemComponent implements AfterContentInit {
     headerTemplate: TemplateRef<any>;
     imageTemplate: TemplateRef<any>;
     descriptionTemplate: TemplateRef<any>;
+    footerTemplate: TemplateRef<any>;
 
     ngAfterContentInit(): void {
         this.setUpContent();
@@ -49,6 +50,8 @@ export class CardItemComponent implements AfterContentInit {
                 case 'description':
                  this.descriptionTemplate = item.template;
                  break;
+                case 'footer':
+                 this.footerTemplate = item.template;
             }
         });
     }

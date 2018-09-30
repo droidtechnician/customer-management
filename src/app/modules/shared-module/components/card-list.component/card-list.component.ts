@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { CardListModel } from '../../models/CardListModel';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'card-list',
@@ -11,11 +13,11 @@ import { Component, OnInit } from '@angular/core';
 export class CardListComponent implements OnInit{
 
 
-    list: Array<string> = [];
+    @Input() listData: Array<CardListModel> = [];
+    
+    moreDetailsIcon = faChevronRight;
 
     constructor() {}
 
-    ngOnInit(): void {
-        this.list.length = 10;
-    }
+    ngOnInit(): void {}
 }

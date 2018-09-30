@@ -1,15 +1,18 @@
 <div class="custom-box">
-    <div class="card">
-        <div class="card-header" *ngIf="headerTemplate">
-            <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
-        </div>
-        <div class="image-box" *ngIf="imageTemplate">
-            <div class="image-container">
-                <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>
-            </div>
-        </div>
-        <div class="card-body">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <div>
+                    <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+                </div>
+            </mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="assets/male.png" alt="Male">
+        <mat-card-content>
             <ng-container *ngTemplateOutlet="descriptionTemplate"></ng-container>
-        </div>
-    </div>
+        </mat-card-content>
+        <mat-card-footer>
+            <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+        </mat-card-footer>
+    </mat-card>
 </div>

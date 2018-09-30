@@ -13,6 +13,7 @@ import { CardItemComponent } from './components/card-item.component/card-item.co
 import { TemplateDefDirective } from './directives/template-defination.directive';
 import { PaginationComponent } from './components/pagination-component/pagination-component';
 import { GridItemComponent } from './components/grid-item.component/grid-item.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 
@@ -32,7 +33,8 @@ import { GridItemComponent } from './components/grid-item.component/grid-item.co
         NgbModule,
         CommonModule,
         RouterModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        MatCardModule
     ],
     exports: [
         CardItemComponent,
