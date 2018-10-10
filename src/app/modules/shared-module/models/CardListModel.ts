@@ -6,6 +6,10 @@ export interface CardListModel {
     orders: Array<number> | string
 }
 
+export interface MoreDetailsClicked {
+    id: number | string
+}
+
 export interface CardHeader {
     id: string | number,
     name: Array<string> | string

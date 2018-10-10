@@ -1,0 +1,13 @@
+<p-sidebar [(visible)]="show" [styleClass]="styleClass" [position]="position" [blockScroll]="blockScroll" [dismissible]="dismissable" [showCloseIcon]="showCloseAction" (onHide)="sideBarHidden($event)" *ngIf="!fullScreen">
+    <div class="side-bar-content-container">
+        <ng-content select=".side-bar-content">
+        </ng-content>
+    </div>
+</p-sidebar>
+
+<p-sidebar [(visible)]="show" [fullScreen]="fullScreen" [showCloseIcon]="showCloseAction" (onHide)="sideBarHidden($event)" *ngIf="fullScreen">
+    <div class="side-bar-fullscreen">
+        <ng-content select=".side-bar-fullscreen">
+        </ng-content>
+    </div>
+</p-sidebar>

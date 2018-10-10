@@ -14,6 +14,10 @@ import { TemplateDefDirective } from './directives/template-defination.directive
 import { PaginationComponent } from './components/pagination-component/pagination-component';
 import { GridItemComponent } from './components/grid-item.component/grid-item.component';
 import { MatCardModule } from '@angular/material/card';
+import { SidebarModule, Sidebar } from 'primeng/sidebar';
+import { SidebarComponent } from './components/side-bar.component/side-bar.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoaderComponent } from './components/loader.component/loader.component';
 
 
 
@@ -26,6 +30,8 @@ import { MatCardModule } from '@angular/material/card';
         TabSetComponent,
         PaginationComponent,
         GridItemComponent,
+        SidebarComponent,
+        LoaderComponent,
         //Directive
         TemplateDefDirective
     ],
@@ -34,7 +40,10 @@ import { MatCardModule } from '@angular/material/card';
         CommonModule,
         RouterModule,
         FontAwesomeModule,
-        MatCardModule
+        MatCardModule,
+        SidebarModule,
+        NgxSpinnerModule
+
     ],
     exports: [
         CardItemComponent,
@@ -44,6 +53,8 @@ import { MatCardModule } from '@angular/material/card';
         TabSetComponent,
         PaginationComponent,
         GridItemComponent,
+        SidebarComponent,
+        LoaderComponent,
         //Directive
         TemplateDefDirective
     ]

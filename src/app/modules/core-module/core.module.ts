@@ -4,6 +4,7 @@ import { ToastCustomOptions } from './toast.options';
 import { GlobalService } from '../../services/global.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderInterceptor } from '../../services/interceptors/headers-interceptor';
+import { GeoCodingService } from '../../services/geo-coding.service';
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import { HeaderInterceptor } from '../../services/interceptors/headers-intercept
             useClass: ToastCustomOptions
         },
         GlobalService,
+        GeoCodingService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HeaderInterceptor,

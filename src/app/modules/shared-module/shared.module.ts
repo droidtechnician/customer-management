@@ -12,8 +12,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
-
-declare var particleJS: any;
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
 @NgModule({
     declarations: [
@@ -32,7 +31,10 @@ declare var particleJS: any;
         PaginatorModule,
         MatButtonModule,
         MatCardModule,
-        MatExpansionModule
+        MatExpansionModule,
+        NgxMapboxGLModule.withConfig({
+            accessToken: 'pk.eyJ1IjoiZHJvaWR0ZWNobmljaWFuIiwiYSI6ImNqbXc4N3BycTAwb2Yzcmt2YXMxd3phemIifQ.ibNy8pKJkSoTKL0Z5X9sXw'
+        }),
     ],
     exports: [
         //Components
@@ -45,7 +47,8 @@ declare var particleJS: any;
         CommonModule,
         FontAwesomeModule,
         LoadingBarHttpClientModule,
-        MatCardModule
+        MatCardModule,
+        NgxMapboxGLModule
     ],
     providers: []
 })

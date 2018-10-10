@@ -1,6 +1,7 @@
 import { AfterContentInit,
     Component,
     ContentChildren,
+    Input,
     TemplateRef,
     QueryList
 } from '@angular/core';
@@ -20,6 +21,7 @@ import { isNgTemplate } from '@angular/compiler';
 export class CardItemComponent implements AfterContentInit {
 
     personIcon =  faUser;
+    @Input() imgSrc: string;
 
     @ContentChildren(TemplateDefDirective) templateList: QueryList<any>;
 
