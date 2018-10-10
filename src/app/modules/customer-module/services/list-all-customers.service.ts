@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { GlobalService } from '../../../services/global.service';
 import { ToasterModel } from '../../../utilities/models/toast.model';
 import { Observable, throwError } from 'rxjs';
-import { CustomerListRequest } from '../models/customer-request';
+import { CustomerListRequest, CustomerItem } from '../models/customer-request';
 import { url } from '../../../constants/url.const';
 import { catchError } from 'rxjs/operators';
 import { ErrorModel } from '../../../utilities/models/error.model';
+import { CustomerModel } from '../models/customer.model';
 
 @Injectable()
 export class ListAllCustomersService {
@@ -23,6 +24,17 @@ export class ListAllCustomersService {
         return this.http.get(url.getAllCustomers)
             .pipe(catchError(this.handleError))
 
+    }
+
+    /** 
+     * get specific customer details
+     * @method getCustomerDetails
+     * @param customerId unique identifier for the customer
+     * @returns {Observable<CustomerModel>}
+     */
+    getCustomerDetails(customerId: number| string): Observable<CustomerItem> {
+        return this.http.get(`${url.getAllCustomers}/${customerId}`)
+            .pipe(catchError(this.handleError));
     }
 
     /**

@@ -5,7 +5,8 @@ import { ListAllCustomersService } from '../../services/list-all-customers.servi
 import { CustomerListRequest } from '../../models/customer-request';
 import { PaginationConfigModel, PageChangeAction } from '../../../plugins-module/models/pagination-config.model';
 import { CustomerConstants } from '../../constants/customers.constants';
-import { CardListModel } from '../../../shared-module/models/CardListModel';
+import { CardListModel, MoreDetailsClicked } from '../../../shared-module/models/CardListModel';
+import { MoreDetailConfig } from '../../models/more-detail.config';
 
 @Component({
     selector: 'list-card-customers',
@@ -20,6 +21,9 @@ export class ListCardCustomersComponent {
     data: Array<CustomerModel> = [];
     customerData: Array<CustomerModel> = [];
     gridData: Array<CardListModel> = [];
+    detailsConfig: MoreDetailConfig;
+
+    showDetailsPage: boolean;
 
     unSubAllService: Subject<boolean> = new Subject<boolean>();
 
@@ -124,7 +128,31 @@ export class ListCardCustomersComponent {
      * @param startFrom start splicing data array for
      * @param itemsCount the count of items which needs to be spliced
      */
-    setUpPaginationData(data: Array<CustomerModel>, startFrom: number, items: number) {
+    setUpPaginationData(data: Array<CustomerModel>, startFrom: number, items: number): Array<CustomerModel> {
         return (startFrom >= 0) && items ? JSON.parse(JSON.stringify(data)).splice(startFrom, items) : data;
+    }
+
+    /**
+     * callback after the more details button has been clicked
+     * @method moreDetails
+     * @param details of the carditem that has been clicked
+     * @returns { void } nothing is returned
+     */
+    showDetails(details: MoreDetailsClicked): void {
+        this.detailsConfig = {
+            customer_id: details.id,
+            showDetails: true
+        }
+        this.showDetailsPage = true;
+    }
+
+    /**
+     * details bar closed callback
+     * @method detailsBarClosed
+     * @param value boolean type contains status
+     * @returns { void } nothing is returned
+     */
+    detailsBarClosed(value): void {
+        if (value) this.showDetailsPage = false;
     }
 }

@@ -1,0 +1,107 @@
+<side-bar [show]="detailsConfig?.showDetails" [customSideBarConfig]="sideBarConfig" (sideBarClosed)="moreDetailsBarClosed($event)">
+    <div class="side-bar-fullscreen">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 left-panel">
+                    <h3 class="customer-name content">
+                        {{customerDetails?.first_name }} {{customerDetails?.last_name}}
+                    </h3>
+                    <div class="img-container rounded-circle content">
+                        <img src="assets/male.png" class="rounded-circle customer-img">
+                    </div>
+                </div>
+                <div class="col-md-6 right-panel">
+                    <form novalidate [formGroup]="customerForm" *ngIf="!showSpinner">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <mgl-map [style]="'mapbox://styles/mapbox/dark-v9'" [zoom]="[9]" [center]="center" class="map">
+                                    <mgl-marker [lngLat]="lngLat">
+                                        <div class="marker">
+                                            <img src="https://i.imgur.com/MK4NUzI.png">
+                                        </div>
+                                    </mgl-marker>
+                                </mgl-map>
+                            </div>
+                        </div>
+                        <div class="row content">
+                            <div class="col-md-6 form-value">
+                                <label for="fist-name" class="form-labels">
+                                            First Name
+                                            <fa-icon [icon]="editIcon" class="icon" (click)="enableEditing('firstNameEdit')" *ngIf="!editFieldData.firstNameEdit else firstNameUpdate"></fa-icon>
+                                            <ng-template #firstNameUpdate>
+                                                <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('firstNameEdit')"></fa-icon>
+                                            </ng-template>
+                                        </label>
+                                <input type="text" placeholder="First name" class="form-control" *ngIf="editFieldData.firstNameEdit else firstName" formControlName="firstName">
+                                <ng-template #firstName>
+                                    <h6>{{customerDetails?.first_name }}</h6>
+                                </ng-template>
+                            </div>
+                            <div class="col-md-6 form-value">
+                                <label for="last-name" class="form-labels">
+                                            Last Name
+                                            <fa-icon [icon]="editIcon" class="icon" (click)="enableEditing('lastNameEdit')" *ngIf="!editFieldData.lastNameEdit else lastNameUpdate"></fa-icon>
+                                            <ng-template #lastNameUpdate>
+                                                <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('lastNameEdit')"></fa-icon>
+                                            </ng-template>
+                                        </label>
+                                <input type="text" placeholder="Last name" class="form-control" *ngIf="editFieldData.lastNameEdit else lastName" formControlName="lastName">
+                                <ng-template #lastName>
+                                    <h6>{{customerDetails?.last_name }}</h6>
+                                </ng-template>
+                            </div>
+                            <div class="col-md-6 form-value">
+                                <label for="email-id" class="form-labels">
+                                        Email ID
+                                        <fa-icon [icon]="editIcon" class="icon" (click)="enableEditing('emailIdEdit')" *ngIf="!editFieldData.emailIdEdit else emailUpdate"></fa-icon>
+                                        <ng-template #emailUpdate>
+                                            <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('emailUpdate')"></fa-icon>
+                                        </ng-template>
+                                    </label>
+                                <input type="text" placeholder="Email ID" class="form-control" *ngIf="editFieldData.emailIdEdit else emailId" formControlName="emailId">
+                                <ng-template #emailId>
+                                    <h6>{{customerDetails?.email }}</h6>
+                                </ng-template>
+                            </div>
+                            <div class="col-md-6 form-value">
+                                <label for="gender" class="form-labels">
+                                        Gender
+                                        <fa-icon [icon]="editIcon" class="icon" (click)="enableEditing('genderEdit')" *ngIf="!editFieldData.genderEdit else genderUpdate"></fa-icon>
+                                        <ng-template #genderUpdate>
+                                            <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('genderUpdate')"></fa-icon>
+                                        </ng-template>
+                                    </label>
+                                <input type="text" placeholder="Gender" class="form-control" *ngIf="editFieldData.genderEdit else gender" formControlName="gender">
+                                <ng-template #gender>
+                                    <h6>{{customerDetails?.gender }}</h6>
+                                </ng-template>
+                            </div>
+                            <div class="col-md-12 form-value">
+                                <label for="address" class="form-labels">
+                                        Address
+                                        <fa-icon [icon]="editIcon" class="icon" (click)="enableEditing('addressEdit')" *ngIf="!editFieldData.addressEdit else addressUpdate"></fa-icon>
+                                        <ng-template #addressUpdate>
+                                            <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('addressEdit')"></fa-icon>
+                                        </ng-template>
+                                    </label>
+                                <div *ngIf="editFieldData.addressEdit else address">
+                                    <input type="text" placeholder="Street address" class="form-control" formControlName="streetAddress">
+                                    <input type="text" placeholder="City" class="form-control" formControlName="city">
+                                    <input type="text" placeholder="State" class="form-control" formControlName="state">
+                                </div>
+                                <ng-template #address>
+                                    <h6>{{customerDetails?.streetAddress}}, {{customerDetails?.state}}, {{customerDetails?.city}}</h6>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <button class="btn btn-primary " (click)="dismiss()"> Back </button>
+                <button class="btn btn-primary" [disabled]="enableUpdate">Update</button>
+            </div>
+        </div>
+    </div>
+</side-bar>
+<loader [showSpinner]="showSpinner"></loader>

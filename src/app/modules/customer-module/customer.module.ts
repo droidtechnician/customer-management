@@ -7,18 +7,22 @@ import { CommonModule } from '@angular/common';
 import { ListAllCustomersComponent } from './components/list-all-customers.component/list-all-customers.component';
 import { ListCardCustomersComponent } from './components/list-card-view.component/list-card-view.component';
 import { ListGridCustomersComponent } from './components/list-grid-view.component/list-grid-view.component';
+import { MoreCustomerDetailsComponent } from './components/more-customer-details.component/more-customer-details.component';
+import { ReactiveFormsModule } from '@angular/forms';
  
 @NgModule({
     declarations: [
         ListAllCustomersComponent,
         ListCardCustomersComponent,
-        ListGridCustomersComponent
+        ListGridCustomersComponent,
+        MoreCustomerDetailsComponent
     ],
     imports:[
         CommonModule,
         PluginsModule,
         SharedModule,
-        RouterModule.forChild(customerRoutes)
+        RouterModule.forChild(customerRoutes),
+        ReactiveFormsModule
     ]
 })
 
