@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { LoaderSize, LoaderConfig } from '../../models/LoaderConfigModel';
-import { PluginsConstants } from '../../constants/plugins.constants';
+import { LoaderConfig, LoaderSize } from '../../models/loader-config.model';
+import { LoaderConstants } from '../../constants/loader.constants';
 
 @Component({
     selector: 'loader',
@@ -50,7 +50,7 @@ export class LoaderComponent {
         if (Object.keys(config).length > 0) {
             for (let setting in config) {
                 switch (setting) {
-                    case PluginsConstants.loaderBackgroundColor:
+                    case LoaderConstants.loaderBackgroundColor:
                         let colorString = '';
                         for (let i = 0; i< config.backgroundColor.length; i++) {
                             let colorVal = config.backgroundColor[i];
@@ -60,13 +60,13 @@ export class LoaderComponent {
                         }
                         this.bdColor = `rgba(${colorString})`
                         break;
-                    case PluginsConstants.loaderSize:
+                    case LoaderConstants.loaderSize:
                         this.size = config.size;
                         break;
-                    case PluginsConstants.loaderType:
+                    case LoaderConstants.loaderType:
                         this.type = config.type;
                         break;
-                    case PluginsConstants.loaderMsg:
+                    case LoaderConstants.loaderMsg:
                         this.message = config.msg;
                         break;
                 }

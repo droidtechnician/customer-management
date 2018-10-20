@@ -5,10 +5,21 @@ import { GlobalService } from '../../services/global.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderInterceptor } from '../../services/interceptors/headers-interceptor';
 import { GeoCodingService } from '../../services/geo-coding.service';
+import { LoaderComponent } from './components/loader.component/loader.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
+    declarations: [
+        LoaderComponent
+    ],
     imports: [
-        ToastModule.forRoot()
+        CommonModule,
+        NgxSpinnerModule,
+        ToastModule.forRoot(),
+    ],
+    exports: [
+        LoaderComponent
     ],
     providers: [
         {
