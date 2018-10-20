@@ -8,6 +8,7 @@ import { faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { GeoCodingService } from '../../../../services/geo-coding.service';
 import { ForwardGeocodeModel } from '../../../../utilities/models/geo-coding.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { GlobalService } from '../../../../services/global.service';
 
 @Component({
     selector: 'more-details',
@@ -37,6 +38,7 @@ export class MoreCustomerDetailsComponent implements OnInit {
 
     customerForm: FormGroup;
     enableUpdate= false;
+    loading = true;
 
     @Input() set config(configuration: MoreDetailConfig) {
         this.detailsConfig = configuration;
@@ -46,11 +48,11 @@ export class MoreCustomerDetailsComponent implements OnInit {
 
     detailsConfig: MoreDetailConfig;
     sideBarConfig: SidebarConfig = {};
-    showSpinner = true;
 
     customerDetails: CustomerModel;
+    copyCustomerData: CustomerModel;
 
-    constructor(private listAllCustomer: ListAllCustomersService,
+    constructor(private listAllCustomer: ListAllCustomersService, private globalService: GlobalService,
         private geoCodeService: GeoCodingService, private formBuilder: FormBuilder) {}
 
     ngOnInit(): void  {
@@ -108,13 +110,20 @@ export class MoreCustomerDetailsComponent implements OnInit {
      * @returns { void } nothing is returned
      */
     setUpDetails(config: MoreDetailConfig): void {
+        this.globalService.changeSpinnerStatus(true);
         this.listAllCustomer.getCustomerDetails(config.customer_id)
             .subscribe((res : CustomerItem) => {
                 this.customerDetails = res.data;
+                this.copyCustomerData = JSON.parse(JSON.stringify(this.customerDetails));
                 this.setupMarkerOnCustomerAdd();
                 this.createCustomerForm();
-                setTimeout(()=> {
-                    this.showSpinner = false;
+                setTimeout(() => {
+                    this.loading = false;
+                    this.globalService.changeSpinnerStatus(false);
+                }, 2000);
+            }, (error) => {
+                setTimeout(() => {
+                    this.globalService.changeSpinnerStatus(true);
                 }, 2000);
             })
     }
@@ -182,6 +191,11 @@ export class MoreCustomerDetailsComponent implements OnInit {
         for (let field in this.editFieldData) {
             if (field === name) this.editFieldData[field] = false;
             else this.editFieldData[field] = false
+        }
+        if (name === 'firstNameEdit') {
+            if (this.copyCustomerData.first_name !== this.customerForm.get('firstName').value)
+             alert('Values are not same');
+            else alert('Values are same');
         }
     }
 

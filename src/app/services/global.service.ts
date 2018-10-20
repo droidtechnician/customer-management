@@ -7,8 +7,7 @@ import { ToasterModel } from '../utilities/models/toast.model';
 export class GlobalService {
 
     private showToastr: Subject<ToasterModel> = new Subject();
-
-    constructor() {}
+    private showSpinner: Subject<boolean> = new Subject();
 
     /**
      * this method logs everything in browser console
@@ -31,6 +30,15 @@ export class GlobalService {
     }
 
     /**
+     * getter for spinner
+     * @method getSpinner
+     * @returns { Subject<boolean> } custom subject for spinner
+     */
+    getSpinner(): Subject<boolean> {
+        return this.showSpinner;
+    }
+
+    /**
      * shows toaster msg
      * @method showToasterMsg
      * @param toasterData
@@ -38,6 +46,16 @@ export class GlobalService {
      */
     showToasterMsg(toasterData: ToasterModel): void {
         this.showToastr.next(toasterData);
+    }
+
+    /**
+     * change spinner status
+     * @method changeSpinnerStatus
+     * @param spinnerStatus boolean status of the spinner
+     * @returns { void } nothing is returned
+     */
+    changeSpinnerStatus(spinnerStatus: boolean): void {
+        this.showSpinner.next(spinnerStatus);
     }
     
 }

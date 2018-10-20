@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 right-panel">
-                    <form novalidate [formGroup]="customerForm" *ngIf="!showSpinner">
+                    <form novalidate [formGroup]="customerForm" *ngIf="!loading">
                         <div class="row">
                             <div class="col-md-12">
                                 <mgl-map [style]="'mapbox://styles/mapbox/dark-v9'" [zoom]="[9]" [center]="center" class="map">
@@ -104,4 +104,3 @@
         </div>
     </div>
 </side-bar>
-<loader [showSpinner]="showSpinner"></loader>
