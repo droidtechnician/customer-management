@@ -104,3 +104,18 @@
         </div>
     </div>
 </side-bar>
+
+<modal-component [modalStatus]="modals.updateModal" (modalClosed)="updateModalClosed($event)">
+    <div class="head">
+        Update
+    </div>
+
+    <div class="body">
+        Are you sure
+    </div>
+
+    <div class="foot">
+        <a class="cancel-btn">Cancel</a>
+        <button class="btn btn-primary">Confirm</button>
+    </div>
+</modal-component>

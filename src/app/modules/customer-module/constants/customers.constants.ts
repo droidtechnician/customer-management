@@ -13,5 +13,15 @@ export const CustomerConstants = {
     paginatorSize: '',
     paginatorPosition: PaginatorPosition.CENTER,
     maleImg: 'assets/male.png',
-    femaleImg: 'assets/female.png'
+    femaleImg: 'assets/female.png',
+    editableFields: {
+        firstName: 'firstNameEdit',
+        lastName: 'lastNameEdit',
+        email: 'emailUpdate',
+        gender: 'genderUpdate',
+        addressEdit: 'address'
+    },
+    events: {
+        update: 'update'
+    }
 }

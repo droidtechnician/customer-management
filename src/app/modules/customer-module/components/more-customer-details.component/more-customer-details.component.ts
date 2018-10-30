@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { MoreDetailConfig } from '../../models/more-detail.config';
 import { ListAllCustomersService } from '../../services/list-all-customers.service';
 import { SidebarConfig } from '../../../plugins-module/models/SideBarModel';
@@ -9,17 +9,21 @@ import { GeoCodingService } from '../../../../services/geo-coding.service';
 import { ForwardGeocodeModel } from '../../../../utilities/models/geo-coding.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalService } from '../../../../services/global.service';
+import { CustomerConstants } from '../../constants/customers.constants';
+import { ModalModel } from '../../../plugins-module/models/Modal';
+import { UpdateModel } from '../../models/update.model';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'more-details',
     templateUrl: './more-customer-details.component.html',
     styleUrls: [
         './more-customer-details.component.css'
-    ],
-    encapsulation: ViewEncapsulation.None
+    ]
 })
 
-export class MoreCustomerDetailsComponent implements OnInit {
+export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
 
     editIcon = faEdit;
     updateIcon = faCheck;
@@ -33,12 +37,19 @@ export class MoreCustomerDetailsComponent implements OnInit {
     }
 
     center: Array<number> = [0, 0];
-    customerAdd: Array<number>= [0, 0];
+    customerAdd: Array<number> = [0, 0];
     lngLat: Array<number> = [0, 0];
 
     customerForm: FormGroup;
-    enableUpdate= false;
+    enableUpdate = false;
     loading = true;
+
+    modals = {
+        updateModal: false
+    };
+
+    modalShow: Subject<UpdateModel> = new Subject<UpdateModel>();
+    unsubAllService: Subject<boolean> = new Subject<boolean>();
 
     @Input() set config(configuration: MoreDetailConfig) {
         this.detailsConfig = configuration;
@@ -53,10 +64,32 @@ export class MoreCustomerDetailsComponent implements OnInit {
     copyCustomerData: CustomerModel;
 
     constructor(private listAllCustomer: ListAllCustomersService, private globalService: GlobalService,
-        private geoCodeService: GeoCodingService, private formBuilder: FormBuilder) {}
+        private geoCodeService: GeoCodingService, private formBuilder: FormBuilder) { }
 
-    ngOnInit(): void  {
+    ngOnInit(): void {
         this.setupSidebarConfig();
+        this.setupModal();
+    }
+
+    ngOnDestroy(): void {
+        this.unsubAllService.next(true);
+        this.unsubAllService.unsubscribe();
+    }
+
+    /**
+     * modal events capture
+     * @method setupModal
+     * @returns { void } nothing is returned
+     */
+    setupModal(): void {
+        this.modalShow
+        .pipe(
+            takeUntil(this.unsubAllService)
+        )
+        .subscribe((value: UpdateModel) => {
+            if (value.event === CustomerConstants.events.update) 
+                this.modals.updateModal = value.action;
+        });
     }
 
     /** 
@@ -69,7 +102,7 @@ export class MoreCustomerDetailsComponent implements OnInit {
             firstName: [this.customerDetails.first_name, Validators.compose([
                 Validators.required, Validators.minLength(3)
             ])],
-            lastName: [ this.customerDetails.last_name, Validators.compose([
+            lastName: [this.customerDetails.last_name, Validators.compose([
                 Validators.required, Validators.minLength(3)
             ])],
             emailId: [
@@ -112,7 +145,7 @@ export class MoreCustomerDetailsComponent implements OnInit {
     setUpDetails(config: MoreDetailConfig): void {
         this.globalService.changeSpinnerStatus(true);
         this.listAllCustomer.getCustomerDetails(config.customer_id)
-            .subscribe((res : CustomerItem) => {
+            .subscribe((res: CustomerItem) => {
                 this.customerDetails = res.data;
                 this.copyCustomerData = JSON.parse(JSON.stringify(this.customerDetails));
                 this.setupMarkerOnCustomerAdd();
@@ -136,7 +169,7 @@ export class MoreCustomerDetailsComponent implements OnInit {
     setupMarkerOnCustomerAdd(): void {
         const data: ForwardGeocodeModel = {
             limit: 1,
-            query: (()=> {
+            query: (() => {
                 return `${this.customerDetails.streetAddress}, ${this.customerDetails.state}
                 , ${this.customerDetails.city}`
             })()
@@ -192,12 +225,34 @@ export class MoreCustomerDetailsComponent implements OnInit {
             if (field === name) this.editFieldData[field] = false;
             else this.editFieldData[field] = false
         }
-        if (name === 'firstNameEdit') {
-            if (this.copyCustomerData.first_name !== this.customerForm.get('firstName').value)
-             alert('Values are not same');
-            else alert('Values are same');
+        switch (name) {
+            case CustomerConstants.editableFields.firstName:
+                if (this.copyCustomerData.first_name !== this.customerForm.get('firstName').value)
+                    this.showModal(true);
         }
     }
 
+    /**
+     * toggle update modal status
+     * @method showModal
+     * @param status status of the modal
+     * @returns { void } nothing is returned
+     */
+    showModal(status: boolean): void {
+        const updateObj: UpdateModel = {
+            event: CustomerConstants.events.update,
+            action: status
+        };
+        this.modalShow.next(updateObj);
+    }
 
+    /**
+     * update modal closed
+     * @method updateModalClosed
+     * @param value emitted from the update modal
+     * @returns { void } nothing is returned
+     */
+    updateModalClosed(value: ModalModel): void {
+        this.showModal(false);
+    }
 }
