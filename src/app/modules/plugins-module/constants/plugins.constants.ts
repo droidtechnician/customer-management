@@ -9,5 +9,7 @@ export const PluginsConstants = {
     loaderSize: 'size',
     loaderColor: 'color',
     loaderType: 'type',
-    loaderMsg: 'message'
+    loaderMsg: 'message',
+    splitMsg: 'splitMsg',
+    dropdownItem: 'dropdownItem'
 }

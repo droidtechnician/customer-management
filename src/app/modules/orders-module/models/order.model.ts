@@ -1,5 +1,3 @@
-import { GridItemModel } from "../../plugins-module/models/GridItemModel";
-
 export interface Item {
     category: string;
     itemName: string;

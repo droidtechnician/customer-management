@@ -44,5 +44,9 @@ body {
 }
 
 .ui-sidebar {
-    overflow: scroll !important
+    overflow-y: scroll !important;
+}
+
+.mapboxgl-map {
+    border-radius: 10px !important
 }

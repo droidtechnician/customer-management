@@ -40,9 +40,7 @@ export class ModalComponent {
     openModal(): void {
         setTimeout(() => {
             this.modalInstance = this.modalService.open(this.modalContent, {centered: this.center});
-            this.modalInstance.result.then(result => {
-                console.log(result);
-            },
+            this.modalInstance.result.then(result => {},
                 reason => {
                     this.modalClosed.emit({ status: false });
                 });

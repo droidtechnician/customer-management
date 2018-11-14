@@ -3,26 +3,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 left-panel">
+                    <div class="img-container rounded-circle content">
+                        <img src="assets/male.png" class="rounded-circle customer-img">
+                    </div>
                     <h3 class="customer-name content">
                         {{customerDetails?.first_name }} {{customerDetails?.last_name}}
                     </h3>
-                    <div class="img-container rounded-circle content">
-                        <img src="assets/male.png" class="rounded-circle customer-img">
+                    <div class="col-md-12 map-container">
+                        <mgl-map [style]="'mapbox://styles/mapbox/dark-v9'" [zoom]="[9]" [center]="center" class="map">
+                            <mgl-marker [lngLat]="lngLat">
+                                <div class="marker">
+                                    <img src="https://i.imgur.com/MK4NUzI.png">
+                                </div>
+                            </mgl-marker>
+                        </mgl-map>
                     </div>
                 </div>
                 <div class="col-md-6 right-panel">
                     <form novalidate [formGroup]="customerForm" *ngIf="!loading">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <mgl-map [style]="'mapbox://styles/mapbox/dark-v9'" [zoom]="[9]" [center]="center" class="map">
-                                    <mgl-marker [lngLat]="lngLat">
-                                        <div class="marker">
-                                            <img src="https://i.imgur.com/MK4NUzI.png">
-                                        </div>
-                                    </mgl-marker>
-                                </mgl-map>
-                            </div>
-                        </div>
                         <div class="row content">
                             <div class="col-md-6 form-value">
                                 <label for="fist-name" class="form-labels">
@@ -33,6 +31,16 @@
                                             </ng-template>
                                         </label>
                                 <input type="text" placeholder="First name" class="form-control" *ngIf="editFieldData.firstNameEdit else firstName" formControlName="firstName">
+                                <div>
+                                    <span *ngIf="customerForm && customerForm.get('firstName')?.touched && customerForm.get('firstName')?.errors 
+                                    && customerForm.get('firstName')?.errors.required" class="validation-error">
+                                        First Name cannot be empty
+                                    </span>
+                                    <span *ngIf="customerForm && customerForm.get('firstName')?.touched && customerForm.get('firstName')?.errors 
+                                    && customerForm.get('firstName')?.errors.minlength" class="validation-error">
+                                        Minimum length should be 3 characters
+                                    </span>
+                                </div>
                                 <ng-template #firstName>
                                     <h6>{{customerDetails?.first_name }}</h6>
                                 </ng-template>
@@ -46,6 +54,16 @@
                                             </ng-template>
                                         </label>
                                 <input type="text" placeholder="Last name" class="form-control" *ngIf="editFieldData.lastNameEdit else lastName" formControlName="lastName">
+                                <div>
+                                    <span *ngIf="customerForm && customerForm.get('lastName')?.touched && customerForm.get('lastName')?.errors 
+                                        && customerForm.get('lastName')?.errors.required" class="validation-error">
+                                            Last Name cannot be empty
+                                        </span>
+                                    <span *ngIf="customerForm && customerForm.get('lastName')?.touched && customerForm.get('lastName')?.errors 
+                                        && customerForm.get('lastName')?.errors.minlength" class="validation-error">
+                                            Minimum length should be 3 characters
+                                        </span>
+                                </div>
                                 <ng-template #lastName>
                                     <h6>{{customerDetails?.last_name }}</h6>
                                 </ng-template>
@@ -55,10 +73,20 @@
                                         Email ID
                                         <fa-icon [icon]="editIcon" class="icon" (click)="enableEditing('emailIdEdit')" *ngIf="!editFieldData.emailIdEdit else emailUpdate"></fa-icon>
                                         <ng-template #emailUpdate>
-                                            <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('emailUpdate')"></fa-icon>
+                                            <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('emailIdEdit')"></fa-icon>
                                         </ng-template>
                                     </label>
                                 <input type="text" placeholder="Email ID" class="form-control" *ngIf="editFieldData.emailIdEdit else emailId" formControlName="emailId">
+                                <div>
+                                    <span *ngIf="customerForm && customerForm.get('emailId')?.touched && customerForm.get('emailId')?.errors 
+                                            && customerForm.get('emailId')?.errors.required" class="validation-error">
+                                                Email ID cannot be empty
+                                            </span>
+                                    <span *ngIf="customerForm && customerForm.get('emailId')?.touched && customerForm.get('emailId')?.errors 
+                                            && customerForm.get('emailId')?.errors.email" class="validation-error">
+                                                Should be a valid email id
+                                            </span>
+                                </div>
                                 <ng-template #emailId>
                                     <h6>{{customerDetails?.email }}</h6>
                                 </ng-template>
@@ -68,10 +96,17 @@
                                         Gender
                                         <fa-icon [icon]="editIcon" class="icon" (click)="enableEditing('genderEdit')" *ngIf="!editFieldData.genderEdit else genderUpdate"></fa-icon>
                                         <ng-template #genderUpdate>
-                                            <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('genderUpdate')"></fa-icon>
+                                            <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('genderEdit')"></fa-icon>
                                         </ng-template>
                                     </label>
-                                <input type="text" placeholder="Gender" class="form-control" *ngIf="editFieldData.genderEdit else gender" formControlName="gender">
+                                <dropdown [dropdownConfig]="dropdownConfig" formControlName="gender" *ngIf="editFieldData.genderEdit else gender">
+                                    <ng-template templateDef="splitMsg">
+                                        <input type="text" class="form-control" [disabled]="true">
+                                    </ng-template>
+                                    <ng-template templateDef="dropdownItem" let-option="option">
+                                        <label class="dropdown-item" (click)="updateValue(option)">{{option}}</label>
+                                    </ng-template>
+                                </dropdown>
                                 <ng-template #gender>
                                     <h6>{{customerDetails?.gender }}</h6>
                                 </ng-template>
@@ -84,14 +119,41 @@
                                             <fa-icon [icon]="updateIcon" class="icon" (click)="disabledEditing('addressEdit')"></fa-icon>
                                         </ng-template>
                                     </label>
-                                <div *ngIf="editFieldData.addressEdit else address">
+                                <div *ngIf="editFieldData.addressEdit else address" formGroupName="address">
                                     <input type="text" placeholder="Street address" class="form-control" formControlName="streetAddress">
+                                    <div>
+                                        <span *ngIf="customerForm && customerForm.get('address').get('streetAddress')?.touched && customerForm.get('address').get('streetAddress')?.errors 
+                                                    && customerForm.get('address').get('streetAddress')?.errors.required" class="validation-error">
+                                                        Street Address cannot be empty
+                                                    </span>
+                                    </div>
                                     <input type="text" placeholder="City" class="form-control" formControlName="city">
+                                    <div>
+                                        <span *ngIf="customerForm && customerForm.get('address').get('city')?.touched && customerForm.get('address').get('city')?.errors 
+                                                    && customerForm.get('address').get('city')?.errors.required" class="validation-error">
+                                                        City cannot be left empty
+                                                    </span>
+                                        <span *ngIf="customerForm && customerForm.get('address').get('city')?.touched && customerForm.get('address').get('city')?.errors 
+                                                    && customerForm.get('address').get('city')?.errors.minlength" class="validation-error">
+                                                        City should have minimum 3 characters
+                                                    </span>
+                                    </div>
                                     <input type="text" placeholder="State" class="form-control" formControlName="state">
+                                    <div>
+                                        <span *ngIf="customerForm && customerForm.get('address').get('state')?.touched && customerForm.get('address').get('state')?.errors 
+                                                    && customerForm.get('address').get('state')?.errors.required" class="validation-error">
+                                                State cannot be left empty
+                                        </span>
+                                    </div>
                                 </div>
                                 <ng-template #address>
-                                    <h6>{{customerDetails?.streetAddress}}, {{customerDetails?.state}}, {{customerDetails?.city}}</h6>
+                                    <h6>{{customerDetails?.streetAddress}}, {{customerDetails?.city}}, {{customerDetails?.state}}</h6>
                                 </ng-template>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
                             </div>
                         </div>
                     </form>
@@ -105,17 +167,30 @@
     </div>
 </side-bar>
 
-<modal-component [modalStatus]="modals.updateModal" (modalClosed)="updateModalClosed($event)">
+<modal-component [modalStatus]="modals.updateModal" (modalClosed)="showModal($event)">
     <div class="head">
         Update
     </div>
 
     <div class="body">
-        Are you sure
+        Are you sure you want to update ?
     </div>
 
     <div class="foot">
-        <a class="cancel-btn">Cancel</a>
-        <button class="btn btn-primary">Confirm</button>
+        <a class="cancel-btn" (click)="cancelUpdate()">Cancel</a>
+        <button class="btn btn-primary" (click)="confirmUpdate()">Confirm</button>
+    </div>
+</modal-component>
+<modal-component [modalStatus]="modals.formStatusModal" (modalClosed)="showFormModal($event)">
+    <div class="head">
+        Form Status
+    </div>
+
+    <div class="body">
+        Please make sure all customer details are correct before saving !!
+    </div>
+
+    <div class="foot">
+        <button class="btn btn-primary" (click)="showFormModal(false)">Ok</button>
     </div>
 </modal-component>

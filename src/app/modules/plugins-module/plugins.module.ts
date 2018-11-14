@@ -16,6 +16,8 @@ import { GridItemComponent } from './components/grid-item.component/grid-item.co
 import { MatCardModule } from '@angular/material/card';
 import { SidebarModule } from 'primeng/sidebar';
 import { SidebarComponent } from './components/side-bar.component/side-bar.component';
+import { DropdownComponent } from './components/dropdown-component/dropdown.component';
+import { DropdownDirective } from './directives/dropdown.directive';
 
 @NgModule({
     declarations: [
@@ -27,8 +29,10 @@ import { SidebarComponent } from './components/side-bar.component/side-bar.compo
         PaginationComponent,
         GridItemComponent,
         SidebarComponent,
+        DropdownComponent,
         //Directive
-        TemplateDefDirective
+        TemplateDefDirective,
+        DropdownDirective
     ],
     imports: [
         NgbModule,
@@ -47,6 +51,7 @@ import { SidebarComponent } from './components/side-bar.component/side-bar.compo
         PaginationComponent,
         GridItemComponent,
         SidebarComponent,
+        DropdownComponent,
         //Directive
         TemplateDefDirective
     ]

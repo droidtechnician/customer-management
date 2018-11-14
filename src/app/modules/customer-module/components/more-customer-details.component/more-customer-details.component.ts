@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, OnDestroy, Output, ViewEncapsulation } from '@angular/core';
 import { MoreDetailConfig } from '../../models/more-detail.config';
 import { ListAllCustomersService } from '../../services/list-all-customers.service';
 import { SidebarConfig } from '../../../plugins-module/models/SideBarModel';
@@ -14,6 +14,7 @@ import { ModalModel } from '../../../plugins-module/models/Modal';
 import { UpdateModel } from '../../models/update.model';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
+import { DropdownConfigModel } from '../../../plugins-module/models/DropdownConfigModel';
 
 @Component({
     selector: 'more-details',
@@ -27,6 +28,8 @@ export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
 
     editIcon = faEdit;
     updateIcon = faCheck;
+
+    fieldUpdated: string;
 
     editFieldData = {
         firstNameEdit: false,
@@ -45,11 +48,21 @@ export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
     loading = true;
 
     modals = {
-        updateModal: false
+        updateModal: false,
+        formStatusModal: false
     };
 
     modalShow: Subject<UpdateModel> = new Subject<UpdateModel>();
     unsubAllService: Subject<boolean> = new Subject<boolean>();
+
+    dropdownConfig: DropdownConfigModel = {
+        splitMode: false,
+        splitMsg: 'Gender',
+        options: [
+            'Male',
+            'Female'
+        ]
+    }
 
     @Input() set config(configuration: MoreDetailConfig) {
         this.detailsConfig = configuration;
@@ -89,6 +102,8 @@ export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
         .subscribe((value: UpdateModel) => {
             if (value.event === CustomerConstants.events.update) 
                 this.modals.updateModal = value.action;
+            if (value.event === CustomerConstants.events.formStatus)
+                this.modals.formStatusModal = value.action;
         });
     }
 
@@ -106,22 +121,26 @@ export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
                 Validators.required, Validators.minLength(3)
             ])],
             emailId: [
-                this.customerDetails.email, Validators.email
+                this.customerDetails.email, Validators.compose([
+                    Validators.email, Validators.required
+                ])
             ],
             gender: [
                 this.customerDetails.gender
             ],
-            city: [
-                this.customerDetails.city, Validators.compose([
-                    Validators.required, Validators.minLength(3)
-                ])
-            ],
-            state: [
-                this.customerDetails.state, Validators.required
-            ],
-            streetAddress: [
-                this.customerDetails.streetAddress
-            ],
+            address: this.formBuilder.group({
+                city: [
+                    this.customerDetails.city, Validators.compose([
+                        Validators.required, Validators.minLength(3)
+                    ])
+                ],
+                state: [
+                    this.customerDetails.state, Validators.required
+                ],
+                streetAddress: [
+                    this.customerDetails.streetAddress, Validators.required
+                ]
+            }),
         })
     }
 
@@ -207,11 +226,12 @@ export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
      * @param name of the field being made editable
      * @returns { void } nothing is returned
      */
-    enableEditing(name: string) {
+    enableEditing(name: string): void {
         for (let field in this.editFieldData) {
             if (field === name) this.editFieldData[field] = true;
             else this.editFieldData[field] = false
         }
+        this.fieldUpdated = name;
     }
 
     /**
@@ -220,16 +240,38 @@ export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
      * @param name of the field being made disabled
      * @returns { void } nothing is returned
      */
-    disabledEditing(name: string) {
-        for (let field in this.editFieldData) {
-            if (field === name) this.editFieldData[field] = false;
-            else this.editFieldData[field] = false
-        }
-        switch (name) {
-            case CustomerConstants.editableFields.firstName:
-                if (this.copyCustomerData.first_name !== this.customerForm.get('firstName').value)
-                    this.showModal(true);
-        }
+    disabledEditing(name: string): void {
+        if (this.customerForm.valid) {
+            let enableEdit = false;
+            switch (name) {
+                case CustomerConstants.editableFields.firstName:
+                    if (this.customerDetails.first_name !== this.customerForm.get('firstName').value)
+                        enableEdit = true;
+                    break;
+                case CustomerConstants.editableFields.lastName:
+                    if (this.customerDetails.last_name !== this.customerForm.get('lastName').value)
+                        enableEdit = true;
+                    break;
+                case CustomerConstants.editableFields.email:
+                    if (this.customerDetails.email !== this.customerForm.get('emailId').value)
+                        enableEdit = true;
+                    break;
+                case CustomerConstants.editableFields.gender:
+                        if (this.customerDetails.gender !== this.customerForm.get('gender').value)
+                            enableEdit = true;
+                        break;
+                case CustomerConstants.editableFields.addressEdit:
+                    let addressForm = this.customerForm.get('address');
+                    if (this.customerDetails.streetAddress !== addressForm.get('streetAddress').value ||
+                    this.customerDetails.city !== addressForm.get('city').value ||
+                    this.customerDetails.state !== addressForm.get('state').value)
+                        enableEdit = true;
+                    break;
+            }
+            if (!enableEdit) this.editFieldData[name] = false
+            this.showModal({status: enableEdit});
+        } else 
+            this.showFormModal({status: true});
     }
 
     /**
@@ -238,21 +280,137 @@ export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
      * @param status status of the modal
      * @returns { void } nothing is returned
      */
-    showModal(status: boolean): void {
+    showModal(status: ModalModel): void {
         const updateObj: UpdateModel = {
             event: CustomerConstants.events.update,
-            action: status
+            action: status.status
         };
         this.modalShow.next(updateObj);
     }
 
+
     /**
-     * update modal closed
-     * @method updateModalClosed
-     * @param value emitted from the update modal
+     * toggle form modal status
+     * @method showFormModal
+     * @param status status of the modal
      * @returns { void } nothing is returned
      */
-    updateModalClosed(value: ModalModel): void {
-        this.showModal(false);
+    showFormModal(status: ModalModel): void {
+        const statusObj: UpdateModel = {
+            event: CustomerConstants.events.formStatus,
+            action: status.status
+        };
+        this.modalShow.next(statusObj);
+    }
+
+    /**
+     * cancel updation of form field
+     * @method cancelUpdate
+     * @returns { void } nothing is returned
+     */
+    cancelUpdate(): void {
+        if (this.fieldUpdated && (this.fieldUpdated in this.editFieldData)) {
+            this.editFieldData[this.fieldUpdated] = false;
+            const formControl: string | Array<string> = this.getFormControl(this.fieldUpdated);
+            if (Array.isArray(formControl)) {
+                const addFormControl = this.customerForm.get('address');
+                addFormControl.get('city').setValue(this.customerDetails.city);
+                addFormControl.get('state').setValue(this.customerDetails.state);
+                addFormControl.get('streetAddress').setValue(this.customerDetails.streetAddress);
+            } else {
+                switch(this.fieldUpdated) {
+                    case CustomerConstants.editableFields.firstName:
+                        this.customerForm.get('firstName').setValue(this.customerDetails.first_name);
+                        break;
+                    case CustomerConstants.editableFields.lastName:
+                        this.customerForm.get('lastName').setValue(this.customerDetails.last_name);
+                        break;
+                    case CustomerConstants.editableFields.email:
+                        this.customerForm.get('emailId').setValue(this.customerDetails.email);
+                        break;
+                    case CustomerConstants.editableFields.gender:
+                        this.customerForm.get('gender').setValue(this.customerDetails.gender);
+                        break;
+                }
+            }
+        this.showModal({status: false});
+        }
+    }
+
+    /**
+     * confirms update of the form data
+     * @method confirmUpdate
+     * @returns { void } nothing is returned
+     */
+    confirmUpdate(): void {
+        let field = '';
+        switch (this.fieldUpdated) {
+            case CustomerConstants.editableFields.firstName:
+                this.customerDetails.first_name = this.customerForm.get('firstName').value;
+                field = CustomerConstants.editableFields.firstName;
+                break;
+            case CustomerConstants.editableFields.lastName:
+                this.customerDetails.last_name = this.customerForm.get('lastName').value;
+                field = CustomerConstants.editableFields.lastName;
+                break;
+            case CustomerConstants.editableFields.email:
+                this.customerDetails.email = this.customerForm.get('emailId').value;
+                field = CustomerConstants.editableFields.email;
+                break;
+            case CustomerConstants.editableFields.gender:
+                this.customerDetails.gender = this.customerForm.get('gender').value;
+                field = CustomerConstants.editableFields.gender;
+                break;
+            case CustomerConstants.editableFields.addressEdit:
+                let addressForm = this.customerForm.get('address');
+                this.customerDetails.streetAddress = addressForm.get('streetAddress').value;
+                this.customerDetails.state = addressForm.get('state').value;
+                this.customerDetails.city = addressForm.get('city').value;
+                field = CustomerConstants.editableFields.addressEdit;
+                break;
+        }
+        this.editFieldData[field] = false;
+        this.showModal({status: false});
+    }
+
+    /**
+     * gets form control name
+     * @method getFormControl
+     * @param name name of the editted control
+     * @returns { string }
+     */
+    getFormControl(name: string): string|Array<string> {
+        if (name in this.editFieldData) {
+            switch(name) {
+                case CustomerConstants.editableFields.firstName:
+
+                    return 'firstName';
+                case CustomerConstants.editableFields.lastName:
+
+                    return 'lastName';
+                case 'emailIdEdit':
+
+                    return 'emailId';
+                case 'genderEdit':
+
+                    return 'gender';
+                case 'addressEdit':
+
+                    return ['city', 'state', 'streetAddress'];
+                
+            }
+        }
+    
+    return '';
+    }
+
+    /**
+     * update gender value
+     * @method updateValue
+     * @param genderValue either male or female
+     * @return { void }
+     */
+    updateValue(genderValue: string): void {
+        this.customerForm.get('gender').setValue(genderValue);
     }
 }

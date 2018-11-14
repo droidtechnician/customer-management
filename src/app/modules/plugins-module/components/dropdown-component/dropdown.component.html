@@ -1,0 +1,30 @@
+<div class="btn-group">
+    <ng-container *ngIf="dropdownConfig?.splitMode">
+        <ng-container *ngTemplateOutlet="splitMsgTemplate ? splitMsgTemplate: defaultSplitMsg">
+        </ng-container>
+    </ng-container>
+    <ng-container *ngTemplateOutlet="textTemplate ? textTemplate: defaultTextTemplate">
+
+    </ng-container>
+    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+        <ng-container *ngFor="let option of dropdownConfig.options">
+            <ng-container *ngTemplateOutlet="dropdownRow ? dropdownRow: defaultRow; context: {option: option}"></ng-container>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #defaultTextTemplate>
+    <input type="text" [value]="dropdownItemValue" [disabled]="true" class="form-control" (click)="onTouched()">
+</ng-template>
+<ng-template #defaultSplitMsg>
+    <button type="button" class="btn btn-primary">
+        Split Me
+    </button>
+</ng-template>
+
+<ng-template #defaultRow let-option="option">
+    <li class="dropdown-item" (click)="itemClicked(option)">{{option}}</li>
+</ng-template>

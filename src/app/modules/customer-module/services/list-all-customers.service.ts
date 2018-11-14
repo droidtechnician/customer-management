@@ -66,4 +66,14 @@ export class ListAllCustomersService {
                 errorObj
             );
     }
+
+    /**
+     * gets order details specific to the customer
+     * @method getCustomerOrderDetails
+     * @param ordersList array of customers orders
+     * @returns { void } nothing is returned
+     */
+    getCustomerOrderDetails(ordersList: Array<number>): void {
+        
+    }
 }

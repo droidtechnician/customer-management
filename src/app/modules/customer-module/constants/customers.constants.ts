@@ -17,11 +17,12 @@ export const CustomerConstants = {
     editableFields: {
         firstName: 'firstNameEdit',
         lastName: 'lastNameEdit',
-        email: 'emailUpdate',
-        gender: 'genderUpdate',
-        addressEdit: 'address'
+        email: 'emailIdEdit',
+        gender: 'genderEdit',
+        addressEdit: 'addressEdit'
     },
     events: {
-        update: 'update'
+        update: 'update',
+        formStatus: 'formStatus'
     }
 }
