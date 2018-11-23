@@ -3,7 +3,7 @@ import { MoreDetailConfig } from '../../models/more-detail.config';
 import { ListAllCustomersService } from '../../services/list-all-customers.service';
 import { SidebarConfig } from '../../../plugins-module/models/SideBarModel';
 import { CustomerModel } from '../../models/customer.model';
-import { CustomerItem } from '../../models/customer-request';
+import { CustomerItem, CustomerUpdate } from '../../models/customer-request';
 import { faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { GeoCodingService } from '../../../../services/geo-coding.service';
 import { ForwardGeocodeModel } from '../../../../utilities/models/geo-coding.model';
@@ -15,6 +15,9 @@ import { UpdateModel } from '../../models/update.model';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
 import { DropdownConfigModel } from '../../../plugins-module/models/DropdownConfigModel';
+import { Order, Item } from '../../../orders-module/models/order.model';
+import swal from 'sweetalert2'
+import { SweetAlertType } from 'src/app/utilities/enums/swal.enum';
 
 @Component({
     selector: 'more-details',
@@ -343,6 +346,7 @@ export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
      * @returns { void } nothing is returned
      */
     confirmUpdate(): void {
+        if (!this.enableUpdate) this.enableUpdate = true
         let field = '';
         switch (this.fieldUpdated) {
             case CustomerConstants.editableFields.firstName:
@@ -412,5 +416,71 @@ export class MoreCustomerDetailsComponent implements OnInit, OnDestroy {
      */
     updateValue(genderValue: string): void {
         this.customerForm.get('gender').setValue(genderValue);
+    }
+
+    /**
+     * creates order descritpion message
+     * @method orderDescriptionMsg
+     * @param order details of the order that has been ordered
+     * @returns { string } a message for the order placed is returned
+     */
+    orderDescriptionMsg(order : Order): string {
+        let orderMsg = 'This order contains ';
+        orderMsg += `${order.items.length} `
+        if (order.items.length > 1) orderMsg += 'items ';
+        else orderMsg += 'item ';
+        orderMsg += ' where most expensive item is a ';
+        let itemList: Array<Item> = JSON.parse(JSON.stringify(order.items));
+        itemList.sort((itemOne, itemTwo) => {
+            return itemTwo.price - itemOne.price;
+        });
+        let maxPriceItem = itemList[itemList.length -1];
+        orderMsg += `${maxPriceItem.itemName} which costs around ${maxPriceItem.price}$
+         and the total billing amount is ${order.totalAmount}$`;
+        return orderMsg;
+    }
+
+    /**
+     * updates customer details
+     * @method updateUserDetails
+     * @returns { void } nothing is returned
+     */
+    updateUserDetails(): void {
+        this.listAllCustomer.updateCustomerDetails(this.getCustomerDetails(),
+        this.customerDetails.customer_id)
+        .pipe(
+            takeUntil(this.unsubAllService)
+        )
+        .subscribe((res: CustomerUpdate) => {
+            if (res.resStatus === true) 
+                this.globalService.showSweetToast({
+                    title: 'Done !!',
+                    text: 'Customer details updated successfully',
+                    type: SweetAlertType.Success,
+                    confirmButtonText: 'Done'
+                }).then((resolve) => {
+                    console.log(resolve)
+                }).catch(error => {
+                    console.log(error);
+                })
+        });
+    }
+
+    /**
+     * get customer details object
+     * @method getCustomerDetails
+     * @returns { CustomerModel } data of the customer
+     */
+    getCustomerDetails(): CustomerModel {
+        
+        return JSON.parse(JSON.stringify({
+            first_name: this.customerForm.get('firstName').value,
+            last_name: this.customerForm.get('lastName').value,
+            email: this.customerForm.get('emailId').value,
+            gender: this.customerForm.get('gender').value,
+            city: this.customerForm.get('address').get('city').value,
+            state: this.customerForm.get('address').get('city').value,
+            streetAddress: this.customerForm.get('address').get('city').value
+        }));
     }
 }

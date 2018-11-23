@@ -50,3 +50,17 @@ body {
 .mapboxgl-map {
     border-radius: 10px !important
 }
+
+.underline-button {
+    text-decoration: underline !important;
+    cursor: pointer;
+    color: #005cbf !important;
+    display: inline-block;
+    font-weight: 400 !important;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}

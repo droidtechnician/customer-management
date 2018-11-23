@@ -11,5 +11,9 @@ export const PluginsConstants = {
     loaderType: 'type',
     loaderMsg: 'message',
     splitMsg: 'splitMsg',
-    dropdownItem: 'dropdownItem'
+    dropdownItem: 'dropdownItem',
+    templates: {
+        accordionTitle: 'accTitle',
+        accordionContent: 'accContent'
+    }
 }

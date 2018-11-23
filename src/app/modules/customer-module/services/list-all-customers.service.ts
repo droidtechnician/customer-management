@@ -3,11 +3,13 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { GlobalService } from '../../../services/global.service';
 import { ToasterModel } from '../../../utilities/models/toast.model';
 import { Observable, throwError } from 'rxjs';
-import { CustomerListRequest, CustomerItem } from '../models/customer-request';
+import { CustomerListRequest, CustomerItem, CustomerUpdate } from '../models/customer-request';
 import { url } from '../../../constants/url.const';
-import { catchError } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { ErrorModel } from '../../../utilities/models/error.model';
 import { CustomerModel } from '../models/customer.model';
+import { Order } from '../../orders-module/models/order.model';
+import { ParamMap } from '@angular/router';
 
 @Injectable()
 export class ListAllCustomersService {
@@ -34,7 +36,19 @@ export class ListAllCustomersService {
      */
     getCustomerDetails(customerId: number| string): Observable<CustomerItem> {
         return this.http.get(`${url.getAllCustomers}/${customerId}`)
-            .pipe(catchError(this.handleError));
+            .pipe(
+                catchError(this.handleError),
+                mergeMap((customerDetails: CustomerItem) => {
+                    return this.getCustomerOrderDetails(customerDetails.data.orders)
+                    .pipe(
+                        map((ordersDetails: any) => {
+                            customerDetails.data.ordersDetails = ordersDetails.res;
+                            return customerDetails;
+                        })
+                    )
+                }),
+                catchError(this.handleError)
+                );
     }
 
     /**
@@ -73,7 +87,25 @@ export class ListAllCustomersService {
      * @param ordersList array of customers orders
      * @returns { void } nothing is returned
      */
-    getCustomerOrderDetails(ordersList: Array<number>): void {
-        
+    getCustomerOrderDetails(ordersList: Array<number>): Observable<Array<Order>> {
+        return this.http.get(`${url.getAllOrders}?ordersList=[${ordersList}]`)
+        .pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    /**
+     * update customer details
+     * @method updateCustomerDetails
+     * @param userDetails details of the user which are being updated
+     * @param customerId id of the customer being updated
+     * @returns { void } nothing is updated
+     */
+    updateCustomerDetails(userDetails: CustomerModel, customerId: number)
+        : Observable<CustomerUpdate> {
+        return this.http.put(`${url.getAllCustomers}/${customerId}`, {userDetails})
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 }

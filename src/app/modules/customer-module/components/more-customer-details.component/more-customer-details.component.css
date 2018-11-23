@@ -56,7 +56,7 @@
 
 .map {
     width: 100%;
-    height: 300px;
+    height: 200px;
 }
 
 .cancel-btn:hover {
@@ -68,4 +68,8 @@
     font-weight: 500;
     cursor: pointer;
     margin: 20px;
+}
+
+.footer-controls {
+    margin-top: 20px
 }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
 import { ToasterModel } from '../utilities/models/toast.model';
+import swal, { SweetAlertResult } from 'sweetalert2'
+import { SwalModel } from '../utilities/models/swal.model';
 
 @Injectable()
 export class GlobalService {
@@ -56,6 +58,16 @@ export class GlobalService {
      */
     changeSpinnerStatus(spinnerStatus: boolean): void {
         this.showSpinner.next(spinnerStatus);
+    }
+
+    /**
+     * shows sweet toast
+     * @method showSweetToast
+     * @param alertConfig contains configuration for the sweet alert
+     * @returns { void } nothing is returned
+     */
+    showSweetToast(alertConfig: SwalModel): Promise<SweetAlertResult> {
+        return swal(alertConfig);
     }
     
 }

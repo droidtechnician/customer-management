@@ -9,3 +9,8 @@ export interface CustomerItem {
     data: CustomerModel;
     resStatus: boolean
 }
+
+export interface CustomerUpdate {
+    resStatus: boolean;
+    msg: string;
+}
