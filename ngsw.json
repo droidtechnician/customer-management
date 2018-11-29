@@ -7,19 +7,19 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "https://droidtechnician.github.io/customer-management/1.4d7f2ee06ff4774ea50e.js",
-        "https://droidtechnician.github.io/customer-management/5.de234a5ad6580f52e985.js",
-        "https://droidtechnician.github.io/customer-management/6.4776f332681d2510e1f7.js",
-        "https://droidtechnician.github.io/customer-management/7.0030f815f4565f5ef7f1.js",
+        "https://droidtechnician.github.io/customer-management/1.d217d7bd24c6684c015c.js",
+        "https://droidtechnician.github.io/customer-management/5.3adb511371ac00d6207c.js",
+        "https://droidtechnician.github.io/customer-management/6.f751c086d3d6f10e8649.js",
+        "https://droidtechnician.github.io/customer-management/7.956716ffed8c54d659c8.js",
         "https://droidtechnician.github.io/customer-management/8.b2beb5d4add0107b377e.js",
         "https://droidtechnician.github.io/customer-management/favicon.ico",
         "https://droidtechnician.github.io/customer-management/index.html",
-        "https://droidtechnician.github.io/customer-management/main.0c61029fecae88da779a.js",
+        "https://droidtechnician.github.io/customer-management/main.fea0d63231a9054d7083.js",
         "https://droidtechnician.github.io/customer-management/polyfills.c2a7344c1c84ba3d2a73.js",
-        "https://droidtechnician.github.io/customer-management/runtime.c5aa484e89e78e629c62.js",
-        "https://droidtechnician.github.io/customer-management/scripts.5629d288d0842c28ea51.js",
-        "https://droidtechnician.github.io/customer-management/styles.5c6acaa112dc4d1a092b.js",
-        "https://droidtechnician.github.io/customer-management/styles.b89d2ff446919048d128.css"
+        "https://droidtechnician.github.io/customer-management/runtime.ec92c63516ff21f90984.js",
+        "https://droidtechnician.github.io/customer-management/scripts.1a746b773e5971904fe7.js",
+        "https://droidtechnician.github.io/customer-management/styles.77140a9058633bc3c8c5.css",
+        "https://droidtechnician.github.io/customer-management/styles.b68728505dc86e5aad0a.js"
       ],
       "patterns": []
     },
@@ -60,10 +60,10 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "https://droidtechnician.github.io/customer-management/1.4d7f2ee06ff4774ea50e.js": "347aad0d003a30fc08ca70f0d12aaa58b5d8ba7b",
-    "https://droidtechnician.github.io/customer-management/5.de234a5ad6580f52e985.js": "6e6c2c279277847d33e4b69a0d6fdf3ba6528a1d",
-    "https://droidtechnician.github.io/customer-management/6.4776f332681d2510e1f7.js": "0f4d6d145ed3e035af244de64c452dc8b8612c1f",
-    "https://droidtechnician.github.io/customer-management/7.0030f815f4565f5ef7f1.js": "fd8701cf61963b51660a2cf4f20c136a4b0e94da",
+    "https://droidtechnician.github.io/customer-management/1.d217d7bd24c6684c015c.js": "bc4887631510f9d70ff2b24fd46a50fe2d384340",
+    "https://droidtechnician.github.io/customer-management/5.3adb511371ac00d6207c.js": "93a0b89f124fbc872ac4fc584f78f2adff923c0b",
+    "https://droidtechnician.github.io/customer-management/6.f751c086d3d6f10e8649.js": "5f31b0e254b4ce5cb03072b55d18b2356dd457f2",
+    "https://droidtechnician.github.io/customer-management/7.956716ffed8c54d659c8.js": "7c69b040f061bde0230aef3a220e17307a6ba0ab",
     "https://droidtechnician.github.io/customer-management/8.b2beb5d4add0107b377e.js": "f102c1aae0a2c06aa93e6a421ba03b45a1799a0b",
     "https://droidtechnician.github.io/customer-management/assets/angular.png": "f0191f8d50460c560d9e28b29e849b4f44ed0bf4",
     "https://droidtechnician.github.io/customer-management/assets/animations.png": "c84494504c0161bf06adf67bef2feb28b45590af",
@@ -92,13 +92,13 @@
     "https://droidtechnician.github.io/customer-management/assets/router.png": "1bc1ef53ca54c6325294d6635a88ad021c88f6c4",
     "https://droidtechnician.github.io/customer-management/assets/universal.png": "7195ba29ecbd99590b11f7918431dd183e7e23d9",
     "https://droidtechnician.github.io/customer-management/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "https://droidtechnician.github.io/customer-management/index.html": "057dd10fe5f0bfa3bfe61a527b699031b894a41b",
-    "https://droidtechnician.github.io/customer-management/main.0c61029fecae88da779a.js": "d5a24820a33fc27ab705d0b06e5bd834a10e760e",
+    "https://droidtechnician.github.io/customer-management/index.html": "8ddcc0ba102649b9f064101e2ec1781d1a9da46e",
+    "https://droidtechnician.github.io/customer-management/main.fea0d63231a9054d7083.js": "8dc206a3bb185847104fdb032f8ae1c27134cddc",
     "https://droidtechnician.github.io/customer-management/polyfills.c2a7344c1c84ba3d2a73.js": "00e478322e8e5bfca60d5f0509fa68cc5e40c85d",
-    "https://droidtechnician.github.io/customer-management/runtime.c5aa484e89e78e629c62.js": "6a6ffa52521e15c3426251d040ff7e8b47c5ce08",
-    "https://droidtechnician.github.io/customer-management/scripts.5629d288d0842c28ea51.js": "53565023a5618bff652541269d5324fb0b495412",
-    "https://droidtechnician.github.io/customer-management/styles.5c6acaa112dc4d1a092b.js": "2a332e43a29848e4045908be7ea5fe7f69c0bff7",
-    "https://droidtechnician.github.io/customer-management/styles.b89d2ff446919048d128.css": "50b752ef1b7b84fc0d6b76d5fbb67555e981495a"
+    "https://droidtechnician.github.io/customer-management/runtime.ec92c63516ff21f90984.js": "1fbac936e4a7a6da9ae7f54ed1bce6caa3975970",
+    "https://droidtechnician.github.io/customer-management/scripts.1a746b773e5971904fe7.js": "d4c84af3ad8d249366a6a2aad13bb395a185d72b",
+    "https://droidtechnician.github.io/customer-management/styles.77140a9058633bc3c8c5.css": "191a606d50db86c8fe96d304c65370d7a77e75f8",
+    "https://droidtechnician.github.io/customer-management/styles.b68728505dc86e5aad0a.js": "c689b7eb7c4e80616c30c4667ea17be605b2bf49"
   },
   "navigationUrls": [
     {
