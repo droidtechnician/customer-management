@@ -1,0 +1,18 @@
+<ngb-accordion>
+    <ngb-panel>
+        <ng-template ngbPanelTitle>
+            <ng-container *ngTemplateOutlet="accordianTitle ? accordianTitle : defaultTitle; context: {title: accordianData?.title }"></ng-container>
+        </ng-template>
+        <ng-template ngbPanelContent>
+            <ng-container *ngTemplateOutlet="accordianContent ? accordianContent : defaultContent"></ng-container>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>
+
+<ng-template #defaultTitle let-heading="title">
+    here
+</ng-template>
+
+<ng-template #defaultContent>
+    No Content found
+</ng-template>

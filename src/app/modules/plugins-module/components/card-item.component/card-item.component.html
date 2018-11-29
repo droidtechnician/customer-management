@@ -7,7 +7,7 @@
                 </div>
             </mat-card-title>
         </mat-card-header>
-        <img mat-card-image [src]="imgSrc" alt="Male">
+        <img mat-card-image [src]="imgSrc" alt="Male" *ngIf="imgSrc">
         <mat-card-content>
             <ng-container *ngTemplateOutlet="descriptionTemplate"></ng-container>
         </mat-card-content>

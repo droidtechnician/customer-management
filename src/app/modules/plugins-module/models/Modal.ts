@@ -6,5 +6,6 @@ export interface ModalModel {
 
 export enum ModalAction {
     CLOSED_BY_BACKDROP = 'closedByBackdrop',
-    CLOSED_BY_CANCEL = 'closedByCancel'
+    CLOSED_BY_CANCEL = 'closedByCancel',
+    CLOSE_BY_SAVE = 'closedBySave'
 }

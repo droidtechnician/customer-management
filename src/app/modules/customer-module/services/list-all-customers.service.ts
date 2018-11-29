@@ -3,11 +3,14 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { GlobalService } from '../../../services/global.service';
 import { ToasterModel } from '../../../utilities/models/toast.model';
 import { Observable, throwError } from 'rxjs';
-import { CustomerListRequest, CustomerItem } from '../models/customer-request';
+import { CustomerListRequest, CustomerItem, CustomerUpdate, CustomerCreateRequest } from '../models/customer-request';
 import { url } from '../../../constants/url.const';
-import { catchError } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { ErrorModel } from '../../../utilities/models/error.model';
 import { CustomerModel } from '../models/customer.model';
+import { Order } from '../../orders-module/models/order.model';
+import { ParamMap } from '@angular/router';
+import { SweetAlertType } from 'src/app/utilities/enums/swal.enum';
 
 @Injectable()
 export class ListAllCustomersService {
@@ -34,7 +37,47 @@ export class ListAllCustomersService {
      */
     getCustomerDetails(customerId: number| string): Observable<CustomerItem> {
         return this.http.get(`${url.getAllCustomers}/${customerId}`)
-            .pipe(catchError(this.handleError));
+            .pipe(
+                catchError(this.handleError),
+                mergeMap((customerDetails: CustomerItem) => {
+                    return this.getCustomerOrderDetails(customerDetails.data.orders)
+                    .pipe(
+                        map((ordersDetails: any) => {
+                            customerDetails.data.ordersDetails = ordersDetails.res;
+                            return customerDetails;
+                        })
+                    )
+                }),
+                catchError(this.handleError)
+                );
+    }
+
+    /**
+     * creates new customer data
+     * @method createNewCustomer
+     * @param customerDetails customer details
+     * @returns { Observable<any> }
+     */
+    createNewCustomer(customerDetails: CustomerModel): Observable<any> {
+        return this.http.post(`${url.getAllCustomers}`, customerDetails)
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
+    /**
+     * shows user create successfully
+     * @method showUserCreatedSuccessfully
+     * @param msg message that needs to be displayed
+     * @returns { Promise<any>}
+     */
+    showUserCreatedSuccessfully(msg: string): Promise<any> {
+        return this.globalService.showSweetToast({
+            title: 'Done !!',
+            text: msg,
+            type: SweetAlertType.Success,
+            confirmButtonText: 'Done'
+        })
     }
 
     /**
@@ -73,7 +116,25 @@ export class ListAllCustomersService {
      * @param ordersList array of customers orders
      * @returns { void } nothing is returned
      */
-    getCustomerOrderDetails(ordersList: Array<number>): void {
-        
+    getCustomerOrderDetails(ordersList: Array<number>): Observable<Array<Order>> {
+        return this.http.get(`${url.getAllOrders}?ordersList=[${ordersList}]`)
+        .pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    /**
+     * update customer details
+     * @method updateCustomerDetails
+     * @param userDetails details of the user which are being updated
+     * @param customerId id of the customer being updated
+     * @returns { void } nothing is updated
+     */
+    updateCustomerDetails(userDetails: CustomerModel, customerId: number)
+        : Observable<CustomerUpdate> {
+        return this.http.put(`${url.getAllCustomers}/${customerId}`, {userDetails})
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 }

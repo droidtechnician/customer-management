@@ -7,6 +7,7 @@ import { PaginationConfigModel, PageChangeAction } from '../../../plugins-module
 import { CustomerConstants } from '../../constants/customers.constants';
 import { CardListModel, MoreDetailsClicked } from '../../../shared-module/models/CardListModel';
 import { MoreDetailConfig } from '../../models/more-detail.config';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
     selector: 'list-card-customers',
@@ -37,7 +38,7 @@ export class ListCardCustomersComponent {
         data: this.data
     }
 
-    constructor(private listAllCustomers: ListAllCustomersService) { }
+    constructor(private listAllCustomers: ListAllCustomersService, private globalService: GlobalService) { }
 
     ngOnInit(): void {
         this.getAllCustomers();
@@ -55,8 +56,10 @@ export class ListCardCustomersComponent {
      * @returns {void} nothing is returned
      */
     getAllCustomers(): void {
+        this.showHideSpinner(true);
         this.listAllCustomers.getAllCustomers()
             .subscribe((response: CustomerListRequest) => {
+                this.showHideSpinner(false);
                 if (response.resStatus) {
                     this.data = response.data;
                     const defaultPage: PageChangeAction = {
@@ -66,7 +69,19 @@ export class ListCardCustomersComponent {
                     this.paginationConfig.collectionSize = this.data.length;
                     this.pageSelected(defaultPage)
                 }
+            }, error => {
+                this.showHideSpinner(false);
             })
+    }
+
+    /**
+     * show/hide spinner
+     * @method showHideSpinner
+     * @param status status of the spinner
+     * @returns { void } nothing is returned
+     */
+    showHideSpinner(status: boolean): void {
+        this.globalService.changeSpinnerStatus(status);
     }
 
     /**
@@ -77,6 +92,7 @@ export class ListCardCustomersComponent {
      * @return { void } nothing is returned
      */
     pageSelected(value: PageChangeAction): void {
+        this.showHideSpinner(true);
         const startFrom = ((value.pageSelected - 1) * CustomerConstants.pageSize);
         this.customerData = ((startFrom + CustomerConstants.pageSize) > this.data.length) ?
             this.setUpPaginationData(this.data, startFrom, (this.data.length - startFrom)) :
@@ -119,6 +135,10 @@ export class ListCardCustomersComponent {
             };
             this.gridData.push(temp);
         })
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            this.showHideSpinner(false);
+        }, 2000);
     }
 
     /**

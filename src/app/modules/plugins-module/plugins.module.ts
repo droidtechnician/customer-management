@@ -18,6 +18,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { SidebarComponent } from './components/side-bar.component/side-bar.component';
 import { DropdownComponent } from './components/dropdown-component/dropdown.component';
 import { DropdownDirective } from './directives/dropdown.directive';
+import { AccordianComponent } from './components/accordian-component/accordian.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { DropdownDirective } from './directives/dropdown.directive';
         GridItemComponent,
         SidebarComponent,
         DropdownComponent,
+        AccordianComponent,
         //Directive
         TemplateDefDirective,
         DropdownDirective
@@ -52,6 +54,7 @@ import { DropdownDirective } from './directives/dropdown.directive';
         GridItemComponent,
         SidebarComponent,
         DropdownComponent,
+        AccordianComponent,
         //Directive
         TemplateDefDirective
     ]

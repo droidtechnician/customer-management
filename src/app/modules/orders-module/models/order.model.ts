@@ -11,7 +11,7 @@ export interface Order {
     customer_id: number;
     orderNo: number,
     totalAmount: number,
-    custName: string
+    custName?: string
 }
 
 export interface OrderRequest {

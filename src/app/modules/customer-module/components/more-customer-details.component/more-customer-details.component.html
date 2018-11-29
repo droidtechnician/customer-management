@@ -152,16 +152,25 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-
+                            <div class="col-md-12" *ngFor="let order of customerDetails.ordersDetails">
+                                <accordian-comp>
+                                    <ng-template templateDef="accTitle">
+                                        {{order.orderNo}}
+                                    </ng-template>
+                                    <ng-template templateDef="accContent">
+                                        <p>
+                                            {{ orderDescriptionMsg(order) }}
+                                        </p>
+                                    </ng-template>
+                                </accordian-comp>
                             </div>
                         </div>
                     </form>
+                    <div class="row justify-content-end footer-controls">
+                        <a class="underline-button" (click)="dismiss()">Back</a>
+                        <button class="btn btn-primary" [disabled]="!enableUpdate" (click)="updateUserDetails()">Update</button>
+                    </div>
                 </div>
-            </div>
-            <div class="row justify-content-end">
-                <button class="btn btn-primary " (click)="dismiss()"> Back </button>
-                <button class="btn btn-primary" [disabled]="enableUpdate">Update</button>
             </div>
         </div>
     </div>

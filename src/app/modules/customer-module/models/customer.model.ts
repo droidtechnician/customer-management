@@ -1,3 +1,5 @@
+import { Order } from "../../orders-module/models/order.model";
+
 export interface CustomerModel {
     first_name: string;
     last_name: string;
@@ -6,8 +8,9 @@ export interface CustomerModel {
     city: string;
     state: string;
     streetAddress: string;
-    customer_id: number;
-    orders: Array<number>;
+    customer_id?: number;
+    orders?: Array<number>;
+    ordersDetails?: Array<Order>
 }
 
 export enum GenderEnum {

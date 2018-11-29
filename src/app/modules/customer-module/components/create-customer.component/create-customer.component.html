@@ -1,0 +1,128 @@
+<modal-component [modalStatus]="showCustomerForm" [center]="true" (modalClosed)="closeModal($event)" class="user">
+    <div class="head">
+        <label class="create-customer-label"> Create a new customer</label>
+        <span class="close-form" (click)="cancelCreateCustomer()"> 
+                <fa-icon [icon]="cancelIcon"></fa-icon>     
+            </span>
+    </div>
+    <div class="body">
+        <form novalidate [formGroup]="customerForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="customerFname">First Name</label>
+                        <input type="text" id="customerFname" class="form-control" placeholder="First name" formControlName="fName">
+                        <ng-container *ngIf="customerForm.get('fName').touched && customerForm.get('fName').errors">
+                            <ng-container *ngIf="customerForm.get('fName').errors?.required">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'First name cannot be empty'} ">
+
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="customerForm.get('fName').errors?.minlength">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'First name should have minimum 3 characters'} ">
+
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="customerLname">Last Name</label>
+                        <input type="text" id="customerLname" class="form-control" placeholder="Last name" formControlName="lName">
+                        <ng-container *ngIf="customerForm.get('lName').touched && customerForm.get('lName').errors">
+                            <ng-container *ngIf="customerForm.get('fName').errors?.required">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'Last name cannot be empty'} ">
+
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="customerForm.get('lName').errors?.minlength">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'Last name should have minimum 3 characters'} ">
+
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="customerEmail">Email</label>
+                        <input type="email" id="customerEmail" class="form-control" placeholder="Email" formControlName="email">
+                        <ng-container *ngIf="customerForm.get('email').touched && customerForm.get('email').errors">
+                            <ng-container *ngIf="customerForm.get('email').errors?.required">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'EmailID cannot be empty'} ">
+
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="customerForm.get('email').errors?.email">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'Should be a valid email id'} ">
+
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="customerGender">Gender</label>
+                        <dropdown [dropdownConfig]="dropdownConfig" formControlName="gender">
+                            <ng-template templateDef="splitMsg">
+                                <input type="text" class="form-control" [disabled]="true">
+                            </ng-template>
+                            <ng-template templateDef="dropdownItem" let-option="option">
+                                <label class="dropdown-item" (click)="updateValue(option)">{{option}}</label>
+                            </ng-template>
+                        </dropdown>
+                    </div>
+                </div>
+                <div class="col-md-12 " formGroupName="address">
+                    <label for="address">Address</label>
+                    <div class="form-group" class="address">
+                        <input type="text" placeholder="Street address" class="form-control" formControlName="streetAddress">
+                        <input type="text" placeholder="City" class="form-control" formControlName="city">
+                        <input type="text" placeholder="State" class="form-control" formControlName="state">
+                        <ng-container *ngIf="customerForm.get('address').get('city').touched && customerForm.get('address').get('city').errors">
+                            <ng-container *ngIf="customerForm.get('address').get('city').errors?.required">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'City cannot be empty'} ">
+
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="customerForm.get('address').get('city').errors?.minlength">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'City name should have minimum 3 characters'} ">
+
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="customerForm.get('address').get('state').touched && customerForm.get('address').get('state').errors">
+                            <ng-container *ngIf="customerForm.get('address').get('state').errors?.required">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'State name cannot be empty'} ">
+
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="customerForm.get('address').get('streetAddress').touched && customerForm.get('address').get('streetAddress').errors">
+                            <ng-container *ngIf="customerForm.get('address').get('streetAddress').errors?.required">
+                                <ng-container *ngTemplateOutlet="errorTemplate; context: {errorMsg: 'Street Address cannot be empty'} ">
+
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="foot">
+        <div class="row">
+            <div class="col-md-12">
+                <a class="underline-button" (click)="cancelCreateCustomer()">Cancel</a>
+                <button class="btn btn-primary" [disabled]="!customerForm.valid" (click)="createCustomer()">Create Customer</button>
+            </div>
+        </div>
+    </div>
+</modal-component>
+
+<ng-template let-msg="errorMsg" #errorTemplate>
+    <p class="validation-error">{{msg}}</p>
+</ng-template>
