@@ -5,6 +5,10 @@ export interface CustomerListRequest {
     resStatus: boolean
 }
 
+export interface CustomerCreateRequest {
+    resStatus: boolean
+}
+
 export interface CustomerItem {
     data: CustomerModel;
     resStatus: boolean

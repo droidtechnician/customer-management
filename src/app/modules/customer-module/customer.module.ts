@@ -9,13 +9,15 @@ import { ListCardCustomersComponent } from './components/list-card-view.componen
 import { ListGridCustomersComponent } from './components/list-grid-view.component/list-grid-view.component';
 import { MoreCustomerDetailsComponent } from './components/more-customer-details.component/more-customer-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CreateCustomerComponent } from './components/create-customer.component/create-customer.component';
  
 @NgModule({
     declarations: [
         ListAllCustomersComponent,
         ListCardCustomersComponent,
         ListGridCustomersComponent,
-        MoreCustomerDetailsComponent
+        MoreCustomerDetailsComponent,
+        CreateCustomerComponent
     ],
     imports:[
         CommonModule,

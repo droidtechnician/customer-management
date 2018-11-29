@@ -3,13 +3,14 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { GlobalService } from '../../../services/global.service';
 import { ToasterModel } from '../../../utilities/models/toast.model';
 import { Observable, throwError } from 'rxjs';
-import { CustomerListRequest, CustomerItem, CustomerUpdate } from '../models/customer-request';
+import { CustomerListRequest, CustomerItem, CustomerUpdate, CustomerCreateRequest } from '../models/customer-request';
 import { url } from '../../../constants/url.const';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { ErrorModel } from '../../../utilities/models/error.model';
 import { CustomerModel } from '../models/customer.model';
 import { Order } from '../../orders-module/models/order.model';
 import { ParamMap } from '@angular/router';
+import { SweetAlertType } from 'src/app/utilities/enums/swal.enum';
 
 @Injectable()
 export class ListAllCustomersService {
@@ -49,6 +50,34 @@ export class ListAllCustomersService {
                 }),
                 catchError(this.handleError)
                 );
+    }
+
+    /**
+     * creates new customer data
+     * @method createNewCustomer
+     * @param customerDetails customer details
+     * @returns { Observable<any> }
+     */
+    createNewCustomer(customerDetails: CustomerModel): Observable<any> {
+        return this.http.post(`${url.getAllCustomers}`, customerDetails)
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
+    /**
+     * shows user create successfully
+     * @method showUserCreatedSuccessfully
+     * @param msg message that needs to be displayed
+     * @returns { Promise<any>}
+     */
+    showUserCreatedSuccessfully(msg: string): Promise<any> {
+        return this.globalService.showSweetToast({
+            title: 'Done !!',
+            text: msg,
+            type: SweetAlertType.Success,
+            confirmButtonText: 'Done'
+        })
     }
 
     /**
